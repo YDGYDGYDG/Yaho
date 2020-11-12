@@ -1,0 +1,1 @@
+압축을 푼 곳에 있는 Scripts, ServerScripts 폴더를 Game.neko가 있는 폴더에 붙여넣기 해주세요.
