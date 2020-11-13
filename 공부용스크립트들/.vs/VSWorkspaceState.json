@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\PetUIScripting",
+    "\\PetUIScripting\\ServerScripts",
+    "\\몬스터체력바",
+    "\\몬스터체력바\\Scripts",
+    "\\워프",
+    "\\워프\\Scripts",
+    "\\워프\\ServerScripts",
+    "\\제작",
+    "\\제작\\Scripts"
+  ],
+  "SelectedNode": "\\제작\\Scripts\\제작.lua",
+  "PreviewInSolutionExplorer": false
+}

@@ -1,11 +1,12 @@
 
-
+-- 이미지 선언
 HPMP = Image("Pictures/HPMP.png", Rect(Client.width/2-104, Client.height-101, 207, 41))
 HUD = Image("Pictures/HUD.png", Rect(0, Client.height-48, 1200, 48))
 BAR_HP = Image("Pictures/BAR_HP.png", Rect(0,0,100,100))
 BAR_MP = Image("Pictures/BAR_MP.png", Rect(Client.width-60/2, Client.height-79, 146, 10))
 BAR_EXP = Image("Pictures/BAR_EXP.png", Rect(Client.width-60/3,Client.height/3,100,100))
 
+--텍스트 선언
 LVTextOut1 = Text()
 LVTextOut1.rect = Rect(9, Client.height-48+17, 122, 31)
 LVTextOut1.textSize = 20
@@ -22,6 +23,7 @@ LVText = Text()
 LVText.rect = Rect(10, Client.height-48+18, 122, 31)
 LVText.textSize = 20
 
+--함수 정의
 function refreshUI()
 	ScreenUI.hpBarVisible  = false
 	ScreenUI.mpBarVisible  = false
@@ -39,5 +41,6 @@ function refreshUI()
 	BAR_EXP.DOScale(Point(Client.myPlayerUnit.exp/Client.myPlayerUnit.maxEXP, 1), 0.5)
 end
 
+--함수 추가
 Client.onTick.Add(refreshUI,1)
 
