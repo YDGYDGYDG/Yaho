@@ -27,11 +27,16 @@ WAY_Slider_Hitbar_Bad_Criteria = 50
 WAY_Slider_Hitbar1_Result = 0
 WAY_Slider_Hitbar2_Result = 0
 WAY_Slider_Hitbar3_Result = 0
+-- 히트바 판정 결과 배수
+WAY_Slider_Hitbar_Result_Bad = 0.5
+WAY_Slider_Hitbar_Result_Good = 0.7
+WAY_Slider_Hitbar_Result_Perfect = 1
+
 
 --히트바 생성===============================
-WAY_Slider_Hitbar1 = Image("Pictures/Slider_Hitbar.png",Rect(WAY_Slider_Min_Gauge, 100, 20, 50))
-WAY_Slider_Hitbar2 = Image("Pictures/Slider_Hitbar.png",Rect(WAY_Slider_Min_Gauge, 100, 20, 50))
-WAY_Slider_Hitbar3 = Image("Pictures/Slider_Hitbar.png",Rect(WAY_Slider_Min_Gauge, 100, 20, 50))
+WAY_Slider_Hitbar1 = Image("Pictures/Slider_Hitbar.png",Rect(WAY_Slider_Min_Gauge, 100, 10, 50))
+WAY_Slider_Hitbar2 = Image("Pictures/Slider_Hitbar.png",Rect(WAY_Slider_Min_Gauge, 100, 10, 50))
+WAY_Slider_Hitbar3 = Image("Pictures/Slider_Hitbar.png",Rect(WAY_Slider_Min_Gauge, 100, 10, 50))
 
 WAY_Slider_Hitbar1.anchor = 4
 WAY_Slider_Hitbar2.anchor = 4
@@ -88,6 +93,8 @@ WAY_Slider_Hitbar_Perfect.enabled = false
 
 --판정 복사용
 UIresult = WAY_Slider_Hitbar_Bad
+ATKResult = 0
+
 --페이드아웃
 UIresultFadeOut = 255
 
@@ -104,6 +111,7 @@ Func_MoveCount_Hitbar2 = 0
 function WAY_SliderHitOn()
     local Page = Client.LoadPage("SliderHit")
 
+    --초기화
     WAY_Slider_Hitbar1.enabled = true
     WAY_Slider_Hitbar1.visible = true
     WAY_Slider_Hitbar2.enabled = true
@@ -112,6 +120,8 @@ function WAY_SliderHitOn()
     WAY_Slider_Hitbar3.visible = true
     WAY_Slider_Hitbar_Interval1 = math.random(WAY_Slider_Hitbar_MIN_Interval, WAY_Slider_Hitbar_MAX_Interval)
     WAY_Slider_Hitbar_Interval2 = math.random(WAY_Slider_Hitbar_MIN_Interval, WAY_Slider_Hitbar_MAX_Interval)
+    ATKResult = 0
+
     if WAY_MovingHitbar_ON == false then
         WAY_MovingHitbar_ON = true
         Client.onTick.Add(MovingHitbar,1)
@@ -123,34 +133,41 @@ end
 --히트바 움직이기
 function MovingHitbar()
     --1번 간다
-    if WAY_Slider_Hitbar1.x < WAY_Slider_Max_Gauge then
+    if WAY_Slider_Hitbar1.x < WAY_Slider_Max_Gauge and WAY_Slider_Hitbar1.enabled == true then
         WAY_Slider_Hitbar1.x = WAY_Slider_Hitbar1.x + WAY_Slider_Speed
         Func_MoveCount_Hitbar1 = Func_MoveCount_Hitbar1 + 1
     end
     if WAY_Slider_Hitbar1.x >= WAY_Slider_Max_Gauge then
         WAY_Slider_Hitbar1.visible = false
         WAY_Slider_Hitbar1.enabled = false
+        ATKResult = ATKResult + WAY_Slider_Hitbar_Result_Bad
+        SliderHitResult(WAY_Slider_Hitbar1.x, 0)
     end
     --2번 간다
-    if WAY_Slider_Hitbar2.x < WAY_Slider_Max_Gauge and Func_MoveCount_Hitbar1 >= WAY_Slider_Hitbar_Interval1 then
+    if WAY_Slider_Hitbar2.x < WAY_Slider_Max_Gauge and Func_MoveCount_Hitbar1 >= WAY_Slider_Hitbar_Interval1 and WAY_Slider_Hitbar2.enabled == true then
         WAY_Slider_Hitbar2.x = WAY_Slider_Hitbar2.x + WAY_Slider_Speed
         Func_MoveCount_Hitbar2 = Func_MoveCount_Hitbar2 + 1
     end
     if WAY_Slider_Hitbar2.x >= WAY_Slider_Max_Gauge then
         WAY_Slider_Hitbar2.visible = false
         WAY_Slider_Hitbar2.enabled = false
+        ATKResult = ATKResult + WAY_Slider_Hitbar_Result_Bad
+        SliderHitResult(WAY_Slider_Hitbar2.x, 0)
     end
     --3번 간다
-    if WAY_Slider_Hitbar3.x < WAY_Slider_Max_Gauge and Func_MoveCount_Hitbar2 >= WAY_Slider_Hitbar_Interval2 then
+    if WAY_Slider_Hitbar3.x < WAY_Slider_Max_Gauge and Func_MoveCount_Hitbar2 >= WAY_Slider_Hitbar_Interval2 and WAY_Slider_Hitbar3.enabled == true then
         WAY_Slider_Hitbar3.x = WAY_Slider_Hitbar3.x + WAY_Slider_Speed
     end
     if WAY_Slider_Hitbar3.x >= WAY_Slider_Max_Gauge then
         WAY_Slider_Hitbar3.visible = false
         WAY_Slider_Hitbar3.enabled = false
+        ATKResult = ATKResult + WAY_Slider_Hitbar_Result_Bad
+        SliderHitResult(WAY_Slider_Hitbar3.x, 0)
         --초기화
         SliderUndertaker()
     end
 end
+
 
 --히트바 종료자
 function SliderUndertaker()
@@ -162,6 +179,9 @@ function SliderUndertaker()
     WAY_Slider_Hitbar3.x = WAY_Slider_Min_Gauge
     Client.onTick.Remove(MovingHitbar,1)
     Client.GetPage("SliderHit").Destroy()
+    -- ATKResult를 서버에 보내기
+    Client.FireEvent("SlliderHitResult", ATKResult)
+    ATKResult = 0
 end
 
 
@@ -180,9 +200,12 @@ function HitTheBar()
             -- 1번 판정 저장하기
             if WAY_Slider_Hitbar1_Gauge > WAY_Slider_Hitbar_Bad_Criteria then
                 WAY_Slider_Hitbar1_Result = 0
+                ATKResult = ATKResult + WAY_Slider_Hitbar_Result_Bad
             elseif WAY_Slider_Hitbar1_Gauge > WAY_Slider_Hitbar_Good_Criteria and WAY_Slider_Hitbar1_Gauge <= WAY_Slider_Hitbar_Bad_Criteria then
                 WAY_Slider_Hitbar1_Result = 1
+                ATKResult = ATKResult + WAY_Slider_Hitbar_Result_Good
             else 
+                ATKResult = ATKResult + WAY_Slider_Hitbar_Result_Perfect
                 WAY_Slider_Hitbar1_Result = 2
             end
             SliderHitResult(WAY_Slider_Hitbar1.x, WAY_Slider_Hitbar1_Result)
@@ -198,10 +221,13 @@ function HitTheBar()
             -- 2번 판정 저장하기
             if WAY_Slider_Hitbar2_Gauge > WAY_Slider_Hitbar_Bad_Criteria then
                 WAY_Slider_Hitbar2_Result = 0
+                ATKResult = ATKResult + WAY_Slider_Hitbar_Result_Bad
             elseif WAY_Slider_Hitbar2_Gauge > WAY_Slider_Hitbar_Good_Criteria and WAY_Slider_Hitbar2_Gauge <= WAY_Slider_Hitbar_Bad_Criteria then
                 WAY_Slider_Hitbar2_Result = 1
+                ATKResult = ATKResult + WAY_Slider_Hitbar_Result_Good
             else 
                 WAY_Slider_Hitbar2_Result = 2
+                ATKResult = ATKResult + WAY_Slider_Hitbar_Result_Perfect
             end
             SliderHitResult(WAY_Slider_Hitbar2.x, WAY_Slider_Hitbar2_Result)
 
@@ -216,10 +242,13 @@ function HitTheBar()
             -- 3번 판정 저장하기
             if WAY_Slider_Hitbar3_Gauge > WAY_Slider_Hitbar_Bad_Criteria then
                 WAY_Slider_Hitbar3_Result = 0
+                ATKResult = ATKResult + WAY_Slider_Hitbar_Result_Bad
             elseif WAY_Slider_Hitbar3_Gauge > WAY_Slider_Hitbar_Good_Criteria and WAY_Slider_Hitbar3_Gauge <= WAY_Slider_Hitbar_Bad_Criteria then
                 WAY_Slider_Hitbar3_Result = 1
+                ATKResult = ATKResult + WAY_Slider_Hitbar_Result_Good
             else 
                 WAY_Slider_Hitbar3_Result = 2
+                ATKResult = ATKResult + WAY_Slider_Hitbar_Result_Perfect
             end
             SliderHitResult(WAY_Slider_Hitbar3.x, WAY_Slider_Hitbar3_Result)
             -- 슬라이더 히트 종료하기 
