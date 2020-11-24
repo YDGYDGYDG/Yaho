@@ -7,36 +7,36 @@ math.randomseed(os.time())
 
 --필요값 선언===============================
 --속도
-WAY_Slider_Speed = 3
+local WAY_Slider_Speed = 3
 --슬라이더 최소 최대
-WAY_Slider_Min_Gauge = -150
-WAY_Slider_Max_Gauge = 150
+local WAY_Slider_Min_Gauge = -150
+local WAY_Slider_Max_Gauge = 150
 --히트바 생성 인터벌
-WAY_Slider_Hitbar_MAX_Interval = 40
-WAY_Slider_Hitbar_MIN_Interval = 15
-WAY_Slider_Hitbar_Interval1 = 0
-WAY_Slider_Hitbar_Interval2 = 0
+local WAY_Slider_Hitbar_MAX_Interval = 40
+local WAY_Slider_Hitbar_MIN_Interval = 15
+local WAY_Slider_Hitbar_Interval1 = 0
+local WAY_Slider_Hitbar_Interval2 = 0
 --각 히트바당 현재 게이지 저장용
-WAY_Slider_Hitbar1_Gauge = 0
-WAY_Slider_Hitbar2_Gauge = 0
-WAY_Slider_Hitbar3_Gauge = 0
+local WAY_Slider_Hitbar1_Gauge = 0
+local WAY_Slider_Hitbar2_Gauge = 0
+local WAY_Slider_Hitbar3_Gauge = 0
 -- 히트바 판정 기준값 (너비)
-WAY_Slider_Hitbar_Good_Criteria  = 12.5
-WAY_Slider_Hitbar_Bad_Criteria = 50
+local WAY_Slider_Hitbar_Good_Criteria  = 12.5
+local WAY_Slider_Hitbar_Bad_Criteria = 50
 --각 히트바당 결과 P/G/B (2/1/0)
-WAY_Slider_Hitbar1_Result = 0
-WAY_Slider_Hitbar2_Result = 0
-WAY_Slider_Hitbar3_Result = 0
+local WAY_Slider_Hitbar1_Result = 0
+local WAY_Slider_Hitbar2_Result = 0
+local WAY_Slider_Hitbar3_Result = 0
 -- 히트바 판정 결과 배수
-WAY_Slider_Hitbar_Result_Bad = 0.5
-WAY_Slider_Hitbar_Result_Good = 0.7
-WAY_Slider_Hitbar_Result_Perfect = 1
+local WAY_Slider_Hitbar_Result_Bad = 0.5
+local WAY_Slider_Hitbar_Result_Good = 0.7
+local WAY_Slider_Hitbar_Result_Perfect = 1
 
 
 --히트바 생성===============================
-WAY_Slider_Hitbar1 = Image("Pictures/Slider_Hitbar.png",Rect(WAY_Slider_Min_Gauge, 100, 10, 50))
-WAY_Slider_Hitbar2 = Image("Pictures/Slider_Hitbar.png",Rect(WAY_Slider_Min_Gauge, 100, 10, 50))
-WAY_Slider_Hitbar3 = Image("Pictures/Slider_Hitbar.png",Rect(WAY_Slider_Min_Gauge, 100, 10, 50))
+local WAY_Slider_Hitbar1 = Image("Pictures/Slider_Hitbar.png",Rect(WAY_Slider_Min_Gauge, 100, 10, 50))
+local WAY_Slider_Hitbar2 = Image("Pictures/Slider_Hitbar.png",Rect(WAY_Slider_Min_Gauge, 100, 10, 50))
+local WAY_Slider_Hitbar3 = Image("Pictures/Slider_Hitbar.png",Rect(WAY_Slider_Min_Gauge, 100, 10, 50))
 
 WAY_Slider_Hitbar1.anchor = 4
 WAY_Slider_Hitbar2.anchor = 4
@@ -64,9 +64,9 @@ WAY_Slider_Hitbar3.enabled = false
 --===============================
 
 --판정 UI 생성
-WAY_Slider_Hitbar_Bad = Image("Pictures/Slider_Result_Bad.png",Rect(0, 60, 100, 30))
-WAY_Slider_Hitbar_Good = Image("Pictures/Slider_Result_Good.png",Rect(0, 60, 100, 30))
-WAY_Slider_Hitbar_Perfect = Image("Pictures/Slider_Result_Perfect.png",Rect(0, 60, 120, 45))
+local WAY_Slider_Hitbar_Bad = Image("Pictures/Slider_Result_Bad.png",Rect(0, 60, 100, 30))
+local WAY_Slider_Hitbar_Good = Image("Pictures/Slider_Result_Good.png",Rect(0, 60, 100, 30))
+local WAY_Slider_Hitbar_Perfect = Image("Pictures/Slider_Result_Perfect.png",Rect(0, 60, 120, 45))
 
 WAY_Slider_Hitbar_Bad.anchor = 4
 WAY_Slider_Hitbar_Good.anchor = 4
@@ -92,19 +92,19 @@ WAY_Slider_Hitbar_Good.enabled = false
 WAY_Slider_Hitbar_Perfect.enabled = false
 
 --판정 복사용
-UIresult = WAY_Slider_Hitbar_Bad
-ATKResult = 0
+local UIresult = WAY_Slider_Hitbar_Bad
+local ATKResult = 0
 
 --페이드아웃
-UIresultFadeOut = 255
+local UIresultFadeOut = 255
 
 --===============================
 
 --슬라이더가 돌고 있는 중인지 판단
-WAY_MovingHitbar_ON = false
+local WAY_MovingHitbar_ON = false
 --인터벌 카운트
-Func_MoveCount_Hitbar1 = 0
-Func_MoveCount_Hitbar2 = 0
+local Func_MoveCount_Hitbar1 = 0
+local Func_MoveCount_Hitbar2 = 0
 
 
 --유저의 필살 발동으로 슬라이더 UI 표시하는 함수
