@@ -133,8 +133,10 @@ end
 --히트바 움직이기
 function MovingHitbar()
     --1번 간다
-    if WAY_Slider_Hitbar1.x < WAY_Slider_Max_Gauge and WAY_Slider_Hitbar1.enabled == true then
+    if WAY_Slider_Hitbar1.x < WAY_Slider_Max_Gauge then
+        if WAY_Slider_Hitbar1.enabled == true then
         WAY_Slider_Hitbar1.x = WAY_Slider_Hitbar1.x + WAY_Slider_Speed
+        end
         Func_MoveCount_Hitbar1 = Func_MoveCount_Hitbar1 + 1
     end
     if WAY_Slider_Hitbar1.x >= WAY_Slider_Max_Gauge then
@@ -282,3 +284,7 @@ function SliderHitResultFadeOut()
 end
 
 Client.onTick.Add(SliderHitResultFadeOut)
+
+Client.GetTopic("UseSkill").Add(function(skillID)
+    unit.UseSkill(skillID)
+end)
