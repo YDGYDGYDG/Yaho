@@ -138,8 +138,8 @@ function MovingHitbar()
         WAY_Slider_Hitbar1.x = WAY_Slider_Hitbar1.x + WAY_Slider_Speed
         end
         Func_MoveCount_Hitbar1 = Func_MoveCount_Hitbar1 + 1
-    end
-    if WAY_Slider_Hitbar1.x >= WAY_Slider_Max_Gauge then
+    
+    elseif WAY_Slider_Hitbar1.x >= WAY_Slider_Max_Gauge and WAY_Slider_Hitbar1.enabled == true then
         WAY_Slider_Hitbar1.visible = false
         WAY_Slider_Hitbar1.enabled = false
         ATKResult = ATKResult + WAY_Slider_Hitbar_Result_Bad
@@ -147,10 +147,11 @@ function MovingHitbar()
     end
     --2번 간다
     if WAY_Slider_Hitbar2.x < WAY_Slider_Max_Gauge and Func_MoveCount_Hitbar1 >= WAY_Slider_Hitbar_Interval1 and WAY_Slider_Hitbar2.enabled == true then
-        WAY_Slider_Hitbar2.x = WAY_Slider_Hitbar2.x + WAY_Slider_Speed
+        if WAY_Slider_Hitbar2.enabled == true then
+            WAY_Slider_Hitbar2.x = WAY_Slider_Hitbar2.x + WAY_Slider_Speed
+        end
         Func_MoveCount_Hitbar2 = Func_MoveCount_Hitbar2 + 1
-    end
-    if WAY_Slider_Hitbar2.x >= WAY_Slider_Max_Gauge then
+    elseif WAY_Slider_Hitbar2.x >= WAY_Slider_Max_Gauge and WAY_Slider_Hitbar2.enabled == true then
         WAY_Slider_Hitbar2.visible = false
         WAY_Slider_Hitbar2.enabled = false
         ATKResult = ATKResult + WAY_Slider_Hitbar_Result_Bad
@@ -159,8 +160,8 @@ function MovingHitbar()
     --3번 간다
     if WAY_Slider_Hitbar3.x < WAY_Slider_Max_Gauge and Func_MoveCount_Hitbar2 >= WAY_Slider_Hitbar_Interval2 and WAY_Slider_Hitbar3.enabled == true then
         WAY_Slider_Hitbar3.x = WAY_Slider_Hitbar3.x + WAY_Slider_Speed
-    end
-    if WAY_Slider_Hitbar3.x >= WAY_Slider_Max_Gauge then
+    
+    elseif WAY_Slider_Hitbar3.x >= WAY_Slider_Max_Gauge and WAY_Slider_Hitbar3.enabled == true then
         WAY_Slider_Hitbar3.visible = false
         WAY_Slider_Hitbar3.enabled = false
         ATKResult = ATKResult + WAY_Slider_Hitbar_Result_Bad

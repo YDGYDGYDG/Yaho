@@ -8,6 +8,7 @@ Server.GetTopic("SlliderHitResult").Add(function(ATKResult)
             -- return a.atk * ATKResult - b.def
         end
     end
+    unit.SendSay(ATKResult)
     Server.FireEvent("UseSkill", 4)
 end)
 
