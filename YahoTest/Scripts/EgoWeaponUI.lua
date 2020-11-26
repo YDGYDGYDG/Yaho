@@ -52,7 +52,7 @@ local TalkRandMin = 0
 
 --=====================================
 -- 서버 통신 함수
-local serverYas = function(WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponSP, WeaponHeart)
+local serverYas = function(WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponSP, WeaponHeart, WeaponExp)
     --가져온 캐릭터 수치 반영
     if WeaponType == 20 then
         WeaponImage.image = "Pictures/001_ewp_sword.png"
@@ -67,7 +67,8 @@ local serverYas = function(WeaponType, WeaponLevel, WeaponATK, WeaponCri, Weapon
     WeaponCriPerText.text = WeaponCriPer
     WeaponSPText.text = WeaponSP
     HeartResult.width = WeaponHeart
-
+    WeaponExpText.text = WeaponExp
+    
     -- print("클라 정상 작동 완료")
 end
 

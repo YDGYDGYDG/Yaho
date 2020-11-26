@@ -18,9 +18,10 @@ local clientYas = function()
     local WeaponCriPer = unit.GetStat(102)
     local WeaponSP = unit.GetStat(103)
     local WeaponHeart = unit.GetStat(104)
+    local WeaponExp = unit.GetStat(105)
 
     -- 클라에게 전달
-    Server.FireEvent("ReplyServerValue", WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponSP, WeaponHeart)
+    Server.FireEvent("ReplyServerValue", WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponSP, WeaponHeart, WeaponExp)
     -- unit.SendSay("서버 정상 작동 완료")
 end
 
