@@ -36,27 +36,45 @@ HeartResult.width = 0
 
 --=====================================
 
--- 열닫, 기능 자동 실행
-function EgoWeaponUIOpen()
-    WeaponUI.visible = not WeaponUI.visible
-    WeaponUI.enabled = not WeaponUI.enabled
+-- 서버 통신 함수
+local serverYas = function(WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponSP, WeaponHeart)
+    --가져온 캐릭터 수치 반영
+    if WeaponType == 2 then
+        WeaponImage.image = "Pictures/001_ewp_sword.png"
+    elseif WeaponType == 3 then
+        WeaponImage.image = "Pictures/061_ewp_hammer.png"
+    elseif WeaponType == 4 then
+        WeaponImage.image = "Pictures/031_ewp_spear.png"
+    end
+    WeaponLevelText.text = WeaponLevel
+    WeaponATKText.text = WeaponATK
+    WeaponCriText.text = WeaponCri
+    WeaponCriPerText.text = WeaponCriPer
+    WeaponSPText.text = WeaponSP
+    HeartResult.width = WeaponHeart
 
-
-    -- 캐릭터의 스탯, 장비는 서버 상에서 가져와야 한다
-    -- MyUnit.UseSkill(4)
-    Client.FireEvent("GetServerValue")
-    Client.GetTopic("GetServerValue").Add(function()
-        --가져온 캐릭터 수치 반영
-
-
-    end)
-
-    print("아잇~~2")
+    print("클라 정상 작동 완료")
 end
+
+-- 열기, 기능 자동 실행
+function EgoWeaponUIOpen()
+    if WeaponUI.visible == false then
+    WeaponUI.visible = true
+    WeaponUI.enabled = true
+
+    -- 서버 상에서 캐릭터의 스탯, 장비 가져오기
+    Client.FireEvent("CallServerValue")
+    Client.GetTopic("ReplyServerValue").Add(serverYas)
+    else 
+        WeaponUIClose()
+    end
+end
+
 -- 닫
 function WeaponUIClose()
     WeaponUI.visible = false
     WeaponUI.enabled = false
+    Client.GetTopic("ReplyServerValue").Remove(serverYas)
 end
 
 -- 무기와 대화하기
