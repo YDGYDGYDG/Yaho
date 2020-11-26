@@ -256,8 +256,8 @@ function GiftToWeapon()
 end
 
 -- 무기 장착하기
-function ForceEquipWeapon()
-    Client.FireEvent("ForceEquipWeapon")
-    print("작동")
-end
+-- function ForceEquipWeapon()
+--     Client.FireEvent("ForceEquipWeapon")
+--     print("작동")
+-- end
 
