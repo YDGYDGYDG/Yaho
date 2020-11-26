@@ -53,6 +53,9 @@ local TalkRandMin = 0
 --=====================================
 -- 서버 통신 함수
 local serverYas = function(WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponSP, WeaponHeart, WeaponExp)
+    if WeaponType == nil then
+        WeaponUIClose()
+    end
     --가져온 캐릭터 수치 반영
     if WeaponType == 20 then
         WeaponImage.image = "Pictures/001_ewp_sword.png"
@@ -82,8 +85,8 @@ function EgoWeaponUIOpen()
         -- 서버 상에서 캐릭터의 스탯, 장비 가져오기
         Client.FireEvent("CallServerValue")
         Client.GetTopic("ReplyServerValue").Add(serverYas)
-        else 
-            WeaponUIClose()
+    else 
+        WeaponUIClose()
     end
 end
 
@@ -91,6 +94,7 @@ end
 function WeaponUIClose()
     WeaponUI.visible = false
     WeaponUI.enabled = false
+
     Client.GetTopic("ReplyServerValue").Remove(serverYas)
 end
 

@@ -7,7 +7,7 @@ local clientYas = function()
     -- 무기 정보 복사 (장착템 중 무기는 2번)
     local EquipedWeapon = unit.GetEquipItem(2)
     if EquipedWeapon == nil then
-        unit.SendSay("불러오기 오류")
+        unit.SendSay("무기를 가지고 있지 않습니다.")
     end
     -- 무기 정보 복사
     local WeaponType = EquipedWeapon.dataID
