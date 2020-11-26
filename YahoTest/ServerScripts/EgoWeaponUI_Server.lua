@@ -10,7 +10,7 @@ local clientYas = function()
         unit.SendSay("불러오기 오류")
     end
     -- 무기 정보 복사
-    local WeaponType = EquipedWeapon.id
+    local WeaponType = EquipedWeapon.dataID
     local WeaponLevel = EquipedWeapon.level
     -- 캐릭터 정보 복사 [장비중인 무기 프로퍼티, atk, cri, criPer, SP, heart]
     local WeaponATK = unit.atk
@@ -21,7 +21,7 @@ local clientYas = function()
 
     -- 클라에게 전달
     Server.FireEvent("ReplyServerValue", WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponSP, WeaponHeart)
-    unit.SendSay("서버 정상 작동 완료")
+    -- unit.SendSay("서버 정상 작동 완료")
 end
 
 -- 클라에게서 신호 받기
