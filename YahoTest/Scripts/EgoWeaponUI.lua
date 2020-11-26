@@ -32,6 +32,7 @@ local WeaponExpText = ExpTexts.GetChild("ExpResultText")
 --무기 호감도 (0 ~ 350 넓이조절)
 local HeartPanel = WeaponUI.GetChild("HeartPanel")
 HeartResult = HeartPanel.GetChild("HeartResult") -- 지속 변수
+-- HeartResultText = HeartPanel.GetChild("HeartResultText") -- 지속 변수
 HeartResult.width = 0
 -- 호감도 커트라인
 local HeartBad = 70
@@ -252,5 +253,11 @@ end
 -- 무기에게 선물 주기
 function GiftToWeapon()
     
+end
+
+-- 무기 장착하기
+function ForceEquipWeapon()
+    Client.FireEvent("ForceEquipWeapon")
+    print("작동")
 end
 
