@@ -1,10 +1,15 @@
 
 --init   =====================================================
+local EgoWeaponUI = Client.LoadPage("EgoWeaponUIBt")
+local EgoWeaponUIBt = EgoWeaponUI.GetControl("EgoWeaponBt")
+EgoWeaponUIBt.visible = false
+
 local UI = Client.LoadPage("WeaponUI")
 
 local WeaponUI = UI.GetControl("MainPanel")
 WeaponUI.enabled = false
 WeaponUI.visible = false
+
 
 --무기 이미지
 local WeaponImageBG = WeaponUI.GetChild("WeaponImageBG")
@@ -52,6 +57,12 @@ local TalkRandMin = 0
 
 
 --=====================================
+-- 무기정보 버튼을 보이게 하기
+function EgoWeaponUIBtOn()
+    EgoWeaponUIBt.visible = true
+end
+
+
 -- 서버 통신 함수
 local serverYas = function(WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponSP, WeaponHeart, WeaponExp)
     if WeaponType == nil then
@@ -261,3 +272,4 @@ function ForceEquipWeapon()
     Client.FireEvent("ForceEquipWeaponFirst")
     print("작동")
 end
+
