@@ -37,7 +37,7 @@ local WeaponExpText = ExpTexts.GetChild("ExpResultText")
 --무기 호감도 (0 ~ 350 넓이조절)
 local HeartPanel = WeaponUI.GetChild("HeartPanel")
 HeartResult = HeartPanel.GetChild("HeartResult") -- 지속 변수
--- HeartResultText = HeartPanel.GetChild("HeartResultText") -- 지속 변수
+HeartResultText = HeartPanel.GetChild("HeartResultText") -- 지속 변수
 HeartResult.width = 0
 -- 호감도 커트라인
 local HeartBad = 70
@@ -81,7 +81,7 @@ local serverYas = function(WeaponType, WeaponLevel, WeaponATK, WeaponCri, Weapon
     WeaponCriText.text = WeaponCri
     WeaponCriPerText.text = WeaponCriPer
     WeaponSPText.text = WeaponSP
-    -- HeartResultText.text = (WeaponHeart / 350 * 100).." %"
+    HeartResultText.text = (WeaponHeart / 350 * 100).." %"
     HeartResult.width = WeaponHeart
     WeaponExpText.text = WeaponExp
     
