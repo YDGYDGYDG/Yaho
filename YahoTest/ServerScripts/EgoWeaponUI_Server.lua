@@ -28,19 +28,20 @@ end
 -- 클라에게서 신호 받기
 Server.GetTopic("CallServerValue").Add(clientYas)
 
-
 -- 무기 강제 장착하기
--- Server.onRefreshStats.Add(ForceEquipWeapon(unit))
--- Server.GetTopic("ForceEquipWeapon").Add(ForceEquipWeapon)
--- local ForceEquipWeapon = function()
---     if unit.atk < 1 then
---         if unit.job == 1 then
---             unit.EquipItem(20, true)
---         elseif unit.job == 2 then
---             unit.EquipItem(21, true)
---         elseif unit.job == 3 then
---             unit.EquipItem(22, true)
---         end
---     end
---     unit.SendSay("서버도 작동.")
--- end
+local ForceEquipWeapon = function(unit)
+    -- 공격력 판단해서 0이면 무기가 없는 거임
+    if unit.atk < 1 then
+        unit.SendSay("무기 해제 감지")
+        unit.EquipItem(2, true)
+        unit.SendSay("무기 해제 시퀀스 끝")
+    end
+end
+local ForceEquipWeaponFirst = function()
+    unit.SendSay("무기 처음 획득 감지")
+    unit.EquipItem(2, true)
+    unit.SendSay("무기 처음 획득 시퀀스 끝")
+end
+--스탯이 바뀌면 무기 장착중인지 확인하고 장착하게 하기
+Server.onRefreshStats.Add(ForceEquipWeapon)
+Server.GetTopic("ForceEquipWeaponFirst").Add(ForceEquipWeaponFirst)

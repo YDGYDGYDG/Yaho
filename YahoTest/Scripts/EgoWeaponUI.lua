@@ -70,6 +70,7 @@ local serverYas = function(WeaponType, WeaponLevel, WeaponATK, WeaponCri, Weapon
     WeaponCriText.text = WeaponCri
     WeaponCriPerText.text = WeaponCriPer
     WeaponSPText.text = WeaponSP
+    -- HeartResultText.text = (WeaponHeart / 350 * 100).." %"
     HeartResult.width = WeaponHeart
     WeaponExpText.text = WeaponExp
     
@@ -256,7 +257,7 @@ function GiftToWeapon()
 end
 
 -- 무기 장착하기
--- function ForceEquipWeapon()
---     Client.FireEvent("ForceEquipWeapon")
---     print("작동")
--- end
+function ForceEquipWeapon()
+    Client.FireEvent("ForceEquipWeaponFirst")
+    print("작동")
+end
