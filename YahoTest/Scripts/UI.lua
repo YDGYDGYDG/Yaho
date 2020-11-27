@@ -1,8 +1,4 @@
 
-ScreenUI.hpBarVisible  = false
-ScreenUI.mpBarVisible  = false
-ScreenUI.expBarVisible  = false
-ScreenUI.levelVisible = false
 
 HPMP = Image("Pictures/HPMP.png", Rect(Client.width/2-104, Client.height-101, 207, 41))
 HUD = Image("Pictures/HUD.png", Rect(0, Client.height-48, 1200, 48))
@@ -27,7 +23,11 @@ LVText.rect = Rect(10, Client.height-48+18, 122, 31)
 LVText.textSize = 20
 
 function refreshUI()
-
+	ScreenUI.hpBarVisible  = false
+	ScreenUI.mpBarVisible  = false
+	ScreenUI.expBarVisible  = false
+	ScreenUI.levelVisible = false
+	
 	LVText.text = "LV."..Client.myPlayerUnit.level
 	LVTextOut1.text = "<color=#000000>LV."..Client.myPlayerUnit.level.."</color>"
 	LVTextOut2.text = "<color=#000000>LV."..Client.myPlayerUnit.level.."</color>"
@@ -40,3 +40,29 @@ function refreshUI()
 end
 
 Client.onTick.Add(refreshUI,1)
+
+function HUDOff()
+	HPMP.visible = false
+	HUD.visible = false
+	LVText.visible = false
+	LVTextOut1.visible = false
+	LVTextOut2.visible = false
+	LVTextOut3.visible = false
+	LVTextOut4.visible = false
+	BAR_HP.visible = false
+	BAR_MP.visible = false
+	BAR_EXP.visible = false
+end
+
+function HUDOn()
+	HPMP.visible = true
+	HUD.visible = true
+	LVText.visible = true
+	LVTextOut1.visible = true
+	LVTextOut2.visible = true
+	LVTextOut3.visible = true
+	LVTextOut4.visible = true
+	BAR_HP.visible = true
+	BAR_MP.visible = true
+	BAR_EXP.visible = true
+end

@@ -28,3 +28,19 @@ end
 -- 클라에게서 신호 받기
 Server.GetTopic("CallServerValue").Add(clientYas)
 
+
+-- 무기 강제 장착하기
+-- Server.onRefreshStats.Add(ForceEquipWeapon(unit))
+-- Server.GetTopic("ForceEquipWeapon").Add(ForceEquipWeapon)
+-- local ForceEquipWeapon = function()
+--     if unit.atk < 1 then
+--         if unit.job == 1 then
+--             unit.EquipItem(20, true)
+--         elseif unit.job == 2 then
+--             unit.EquipItem(21, true)
+--         elseif unit.job == 3 then
+--             unit.EquipItem(22, true)
+--         end
+--     end
+--     unit.SendSay("서버도 작동.")
+-- end
