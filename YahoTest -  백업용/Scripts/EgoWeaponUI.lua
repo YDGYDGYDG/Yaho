@@ -1,10 +1,15 @@
 
 --init   =====================================================
+local EgoWeaponUI = Client.LoadPage("EgoWeaponUIBt")
+local EgoWeaponUIBt = EgoWeaponUI.GetControl("EgoWeaponBt")
+EgoWeaponUIBt.visible = false
+
 local UI = Client.LoadPage("WeaponUI")
 
 local WeaponUI = UI.GetControl("MainPanel")
 WeaponUI.enabled = false
 WeaponUI.visible = false
+
 
 --무기 이미지
 local WeaponImageBG = WeaponUI.GetChild("WeaponImageBG")
@@ -32,6 +37,7 @@ local WeaponExpText = ExpTexts.GetChild("ExpResultText")
 --무기 호감도 (0 ~ 350 넓이조절)
 local HeartPanel = WeaponUI.GetChild("HeartPanel")
 HeartResult = HeartPanel.GetChild("HeartResult") -- 지속 변수
+HeartResultText = HeartPanel.GetChild("HeartResultText") -- 지속 변수
 HeartResult.width = 0
 -- 호감도 커트라인
 local HeartBad = 70
@@ -51,6 +57,12 @@ local TalkRandMin = 0
 
 
 --=====================================
+-- 무기정보 버튼을 보이게 하기
+function EgoWeaponUIBtOn()
+    EgoWeaponUIBt.visible = true
+end
+
+
 -- 서버 통신 함수
 local serverYas = function(WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponSP, WeaponHeart, WeaponExp)
     if WeaponType == nil then
@@ -69,6 +81,7 @@ local serverYas = function(WeaponType, WeaponLevel, WeaponATK, WeaponCri, Weapon
     WeaponCriText.text = WeaponCri
     WeaponCriPerText.text = WeaponCriPer
     WeaponSPText.text = WeaponSP
+    HeartResultText.text = (WeaponHeart / 350 * 100).." %"
     HeartResult.width = WeaponHeart
     WeaponExpText.text = WeaponExp
     
@@ -252,5 +265,11 @@ end
 -- 무기에게 선물 주기
 function GiftToWeapon()
     
+end
+
+-- 무기 장착하기
+function ForceEquipWeapon()
+    Client.FireEvent("ForceEquipWeaponFirst")
+    print("작동")
 end
 
