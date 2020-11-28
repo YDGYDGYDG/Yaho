@@ -48,9 +48,9 @@ Server.GetTopic("ForceEquipWeaponFirst").Add(ForceEquipWeaponFirst)
 
 
 --햄스톤 먹였다고 신호 받으면 호감도 스탯 상승시키기
-local GiftToWeapon = function()
+local GiftToWeapon = function(n)
     if unit.GetStat(104) < 341 then
-        unit.SetStat(104, unit.GetStat(104) + 10)
+        unit.SetStat(104, unit.GetStat(104) + n)
         -- unit.SendSay("햄스톤 시퀀스 종료"")
     end
 end

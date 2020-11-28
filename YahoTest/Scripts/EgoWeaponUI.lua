@@ -264,8 +264,8 @@ function AdviceByWeapon()
 end
 
 -- 무기에게 선물 주기
-function GiftToWeapon()
-    Client.FireEvent("GiftToWeapon")
+function GiftToWeapon(n)
+    Client.FireEvent("GiftToWeapon", n)
     -- print("햄스톤 시퀀스 작동 개시")
 end
 
