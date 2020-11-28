@@ -27,6 +27,7 @@ function refreshUI()
 	ScreenUI.mpBarVisible  = false
 	ScreenUI.expBarVisible  = false
 	ScreenUI.levelVisible = false
+	ScreenUI.gameMoneyVisible = false
 	
 	LVText.text = "LV."..Client.myPlayerUnit.level
 	LVTextOut1.text = "<color=#000000>LV."..Client.myPlayerUnit.level.."</color>"
