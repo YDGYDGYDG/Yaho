@@ -32,16 +32,28 @@ Server.GetTopic("CallServerValue").Add(clientYas)
 local ForceEquipWeapon = function(unit)
     -- 공격력 판단해서 0이면 무기가 없는 거임
     if unit.atk < 1 then
-        unit.SendSay("무기 해제 감지")
+        -- unit.SendSay("무기 해제 감지")
         unit.EquipItem(2, true)
-        unit.SendSay("무기 해제 시퀀스 끝")
+        -- unit.SendSay("무기 해제 시퀀스 끝")
     end
 end
 local ForceEquipWeaponFirst = function()
-    unit.SendSay("무기 처음 획득 감지")
+    -- unit.SendSay("무기 처음 획득 감지")
     unit.EquipItem(2, true)
-    unit.SendSay("무기 처음 획득 시퀀스 끝")
+    -- unit.SendSay("무기 처음 획득 시퀀스 끝")
 end
 --스탯이 바뀌면 무기 장착중인지 확인하고 장착하게 하기
 Server.onRefreshStats.Add(ForceEquipWeapon)
 Server.GetTopic("ForceEquipWeaponFirst").Add(ForceEquipWeaponFirst)
+
+
+--햄스톤 먹였다고 신호 받으면 호감도 스탯 상승시키기
+local GiftToWeapon = function()
+    if unit.GetStat(104) < 341 then
+        unit.SetStat(104, unit.GetStat(104) + 10)
+        -- unit.SendSay("햄스톤 시퀀스 종료"")
+    end
+end
+
+Server.GetTopic("GiftToWeapon").Add(GiftToWeapon)
+
