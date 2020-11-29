@@ -1,26 +1,30 @@
 
 
-HPMP = Image("Pictures/HPMP.png", Rect(Client.width/2-104, Client.height-101, 207, 41))
-HUD = Image("Pictures/HUD.png", Rect(0, Client.height-48, 1200, 48))
-BAR_HP = Image("Pictures/BAR_HP.png", Rect(Client.width/2-60, Client.height-95, 146, 10))
-BAR_MP = Image("Pictures/BAR_MP.png", Rect(Client.width/2-60, Client.height-79, 146, 10))
-BAR_EXP = Image("Pictures/BAR_EXP.png", Rect(178, Client.height-16, 531, 10))
+local HPMP = Image("Pictures/HPMP.png", Rect(Client.width/2-104, Client.height-101, 207, 41))
+local HUD = Image("Pictures/HUD.png", Rect(0, Client.height-48, 1200, 48))
+local BAR_HP = Image("Pictures/BAR_HP.png", Rect(Client.width/2-60, Client.height-95, 146, 10))
+local BAR_MP = Image("Pictures/BAR_MP.png", Rect(Client.width/2-60, Client.height-79, 146, 10))
+local BAR_EXP = Image("Pictures/BAR_EXP.png", Rect(178, Client.height-16, 531, 10))
 
-LVTextOut1 = Text()
+local LVTextOut1 = Text()
 LVTextOut1.rect = Rect(9, Client.height-48+17, 122, 31)
 LVTextOut1.textSize = 20
-LVTextOut2 = Text()
+local LVTextOut2 = Text()
 LVTextOut2.rect = Rect(9, Client.height-48+19, 122, 31)
 LVTextOut2.textSize = 20
-LVTextOut3 = Text()
+local LVTextOut3 = Text()
 LVTextOut3.rect = Rect(11, Client.height-48+17, 122, 31)
 LVTextOut3.textSize = 20
-LVTextOut4 = Text()
+local LVTextOut4 = Text()
 LVTextOut4.rect = Rect(11, Client.height-48+19, 122, 31)
 LVTextOut4.textSize = 20
-LVText = Text()
+local LVText = Text()
 LVText.rect = Rect(10, Client.height-48+18, 122, 31)
 LVText.textSize = 20
+
+
+local ManaStoneUI = Client.LoadPage("ManaStoneUI")
+local ManaStoneText = ManaStoneUI.GetControl("ManaStoneText")
 
 function refreshUI()
 	ScreenUI.hpBarVisible  = false
@@ -38,6 +42,8 @@ function refreshUI()
 	BAR_HP.DOScale(Point(Client.myPlayerUnit.hp/Client.myPlayerUnit.maxHP, 1), 0.5)
 	BAR_MP.DOScale(Point(Client.myPlayerUnit.mp/Client.myPlayerUnit.maxMP, 1), 0.5)
 	BAR_EXP.DOScale(Point(Client.myPlayerUnit.exp/Client.myPlayerUnit.maxEXP, 1), 0.5)
+
+	Client.FireEvent("CallServerMana")
 end
 
 Client.onTick.Add(refreshUI,1)
@@ -67,3 +73,12 @@ function HUDOn()
 	BAR_MP.visible = true
 	BAR_EXP.visible = true
 end
+
+local ViewManaStoneText = function(num)
+	-- print("클라 마석 적용 시작")
+	ManaStoneText.text = num.." 마석"
+	Client.GetTopic("ReplyServerManaStone").Remove(ViewManaStoneText)
+	-- print("클라 마석 시퀀스 작동 완료")
+end
+Client.GetTopic("ReplyServerManaStone").Add(ViewManaStoneText)
+
