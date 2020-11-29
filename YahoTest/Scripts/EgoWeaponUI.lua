@@ -263,15 +263,49 @@ function AdviceByWeapon()
 
 end
 
--- 무기에게 선물 주기
-function GiftToWeapon(n)
-    Client.FireEvent("GiftToWeapon", n)
-    -- print("햄스톤 시퀀스 작동 개시")
-end
-
 -- 무기 장착하기
 function ForceEquipWeapon()
-    Client.FireEvent("ForceEquipWeaponFirst")
     -- print("최초 무기 장착 시퀀스 작동 개시")
+    Client.FireEvent("ForceEquipWeaponFirst")
 end
+
+
+--======================================================================
+-- 무기에게 선물 주기
+-- 선물 주기 UI init
+local GiftMainUI = Client.LoadPage("GiftToWeaponUI")
+local GiftUI = GiftMainUI.GetControl("MainPanel")
+GiftUI.visible = false
+
+-- UI 열기
+function GiftUIOn()
+    if GiftUI.visible == false then
+        GiftUI.visible = true
+    else 
+        GiftUIOff()
+    end
+end
+    -- print("호감도 아이템 UI 오픈")
+    -- 남아 있는 햄스톤, 슈퍼햄스톤 개수 서버에 요청
+    -- 받아온 개수 표시    
+    -- 토픽 제거하기
+-- UI 닫기
+function GiftUIOff()
+    GiftUI.visible = false
+end
+
+-- 버튼 입력 처리
+function GiftToWeapon(n)
+    -- print("햄스톤 시퀀스 작동 개시")
+    -- 서버에게 요청
+    -- 요청한 버튼이 햄스톤인지 슈퍼햄스톤인지 판단 (n으로)
+
+    -- 가방 안에 해당 햄스톤이 존재하는지 판단
+    -- 있으면 1개 제거 요청
+
+    -- 무기 호감도 상승 요청
+    Client.FireEvent("GiftToWeapon", n)
+end
+
+
 
