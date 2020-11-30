@@ -1,6 +1,12 @@
 -- 확인해보기
 -- unit.SendSay()
 
+-- 랜덤 사용
+math.randomseed(os.time())
+-- 랜덤 변수
+local ReinforceRandMax = 100
+local ReinforceRandMin = 0
+local ReinforceSucRate = 0
 
 --======================================================================
 -- 무기 장착
@@ -132,27 +138,45 @@ end
 -- 강화 시스템
 -- 강화 관련 정보 보내기
 local ReinforceUIOpen = function()
-
+    local MStones = unit.CountItem(1)
+    local EquipedWeapon = unit.GetEquipItem(2)
+    local ReinLevel = EquipedWeapon.level
+    Server.FireEvent("ReplyServerReinforceUI", MStones, ReinLevel)
 end
 Server.GetTopic("ReinforceUIOpen").Add(ReinforceUIOpen)
 
 -- 강화 처리
 local StartReinforce = function()
     local MStones = unit.CountItem(1)
+    local EquipedWeapon = unit.GetEquipItem(2)
+
     if MStones >= 1 then
-        -- 무기 호감도 상승 요청
-        if unit.GetStat(104) < 350 then
-            unit.RemoveItem(1, 1, true, true, false)
-            unit.SetStat(104, unit.GetStat(104) + n)
-            -- 성공 알림
-            unit.StartGlobalEvent(2)
+        -- 확률 초기화
+        ReinforceSucRate = 0
+        ReinforceSucRate = ReinforceSucRate + (100-(EquipedWeapon.level*5))
+        -- 무기 레벨 상승 요청
+        if EquipedWeapon.level < 100 then
+            local rand = math.random(ReinforceRandMin, ReinforceRandMax)
+            unit.SendSay(rand)
+            unit.SendSay(ReinforceSucRate)
+            if ReinforceSucRate >= rand then
+                unit.RemoveItem(1, 1, true, true, false)
+                EquipedWeapon.level = EquipedWeapon.level + 1
+                -- 성공 알림
+                unit.StartGlobalEvent(2)
+            else
+                unit.RemoveItem(1, 1, true, true, false)
+                -- 실패 알림
+                unit.StartGlobalEvent(3)
+            end
         else
-            unit.SetStat(104, 350)
-            unit.SendSay("이미 호감도가 최대입니다.")
+            unit.SendSay("이미 최고 수준입니다.")
         end
     else
         unit.SendSay("강화에 필요한 마석 덩어리가 부족합니다.")
     end
+    Server.FireEvent("ReplyServerReinforceUI", unit.CountItem(1), EquipedWeapon.level)
+    unit.SendSay("서버 강화 시퀀스 종료")
 end
 Server.GetTopic("StartReinforce").Add(StartReinforce)
 
