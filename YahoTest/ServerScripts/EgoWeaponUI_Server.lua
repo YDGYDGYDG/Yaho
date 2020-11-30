@@ -138,15 +138,18 @@ end
 -- 강화 시스템
 -- 강화 관련 정보 보내기
 local ReinforceUIOpen = function()
+    -- unit.SendSay("강화 UI 오픈 요청 받았습니다")
     local MStones = unit.CountItem(1)
     local EquipedWeapon = unit.GetEquipItem(2)
     local ReinLevel = EquipedWeapon.level
     Server.FireEvent("ReplyServerReinforceUI", MStones, ReinLevel)
+    -- unit.SendSay("강화 UI 오픈 결과 보냅니다")
 end
 Server.GetTopic("ReinforceUIOpen").Add(ReinforceUIOpen)
 
 -- 강화 처리
 local StartReinforce = function()
+    -- unit.SendSay("강화 실행 요청 받았습니다")
     local MStones = unit.CountItem(1)
     local EquipedWeapon = unit.GetEquipItem(2)
 
@@ -157,8 +160,8 @@ local StartReinforce = function()
         -- 무기 레벨 상승 요청
         if EquipedWeapon.level < 100 then
             local rand = math.random(ReinforceRandMin, ReinforceRandMax)
-            unit.SendSay(rand)
-            unit.SendSay(ReinforceSucRate)
+            -- unit.SendSay(rand)
+            -- unit.SendSay(ReinforceSucRate)
             if ReinforceSucRate >= rand then
                 unit.RemoveItem(1, 1, true, true, false)
                 EquipedWeapon.level = EquipedWeapon.level + 1
@@ -170,13 +173,17 @@ local StartReinforce = function()
                 unit.StartGlobalEvent(3)
             end
         else
-            unit.SendSay("이미 최고 수준입니다.")
+            -- 만렙 알림
+            unit.StartGlobalEvent(4)
         end
     else
-        unit.SendSay("강화에 필요한 마석 덩어리가 부족합니다.")
+        -- 재료 부족 알림
+        unit.StartGlobalEvent(5)
     end
-    Server.FireEvent("ReplyServerReinforceUI", unit.CountItem(1), EquipedWeapon.level)
-    unit.SendSay("서버 강화 시퀀스 종료")
+    MStones = unit.CountItem(1)
+    local ReinLevel = EquipedWeapon.level
+    Server.FireEvent("ReplyServerReinforceUI", MStones, ReinLevel)
+    -- unit.SendSay("서버 강화 시퀀스 종료")
 end
 Server.GetTopic("StartReinforce").Add(StartReinforce)
 
