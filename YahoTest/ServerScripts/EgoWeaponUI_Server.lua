@@ -127,3 +127,44 @@ local PowerOfLove = function()
 
 end
 
+
+--====================================================
+-- 강화 시스템
+-- 강화 관련 정보 보내기
+local ReinforceUIOpen = function()
+
+end
+Server.GetTopic("ReinforceUIOpen").Add(ReinforceUIOpen)
+
+-- 강화 처리
+local StartReinforce = function()
+    local MStones = unit.CountItem(1)
+    if MStones >= 1 then
+        -- 무기 호감도 상승 요청
+        if unit.GetStat(104) < 350 then
+            unit.RemoveItem(1, 1, true, true, false)
+            unit.SetStat(104, unit.GetStat(104) + n)
+            -- 성공 알림
+            unit.StartGlobalEvent(2)
+        else
+            unit.SetStat(104, 350)
+            unit.SendSay("이미 호감도가 최대입니다.")
+        end
+    else
+        unit.SendSay("강화에 필요한 마석 덩어리가 부족합니다.")
+    end
+end
+Server.GetTopic("StartReinforce").Add(StartReinforce)
+
+
+
+
+
+
+
+
+
+
+
+
+

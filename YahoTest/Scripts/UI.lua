@@ -76,7 +76,7 @@ end
 
 local ViewManaStoneText = function(num)
 	-- print("클라 마석 적용 시작")
-	ManaStoneText.text = num.." 마석"
+	ManaStoneText.text = num.." 마석 조각"
 	Client.GetTopic("ReplyServerManaStone").Remove(ViewManaStoneText)
 	-- print("클라 마석 시퀀스 작동 완료")
 end

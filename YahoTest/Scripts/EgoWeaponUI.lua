@@ -53,6 +53,18 @@ local HamstoneLeft = GiftItemPanel.GetChild("HamstoneLeft")
 local SHamstoneLeft = GiftItemPanel.GetChild("SHamstoneLeft")
 GiftUI.visible = false
 
+-- 강화 UI init
+local ReinforceMainUI = Client.LoadPage("ReinforceUI")
+local ReinforceUI = ReinforceMainUI.GetControl("MainPanel")
+local ReinforcePanel = ReinforceUI.GetChild("ReinforcePanel")
+local MStoneText = ReinforcePanel.GetChild("MStoneText")
+local ReinLevelText = ReinforcePanel.GetChild("ReinLevelText")
+local NextLevelText = ReinforcePanel.GetChild("NextLevelText")
+local SuccessText = ReinforcePanel.GetChild("SuccessText")
+local FailText = ReinforcePanel.GetChild("FailText")
+ReinforceUI.visible = false
+
+
 --=====================================
 --무기 대화용 랜덤 시드
 
@@ -321,4 +333,22 @@ function GiftToWeapon(n)
 end
 
 
+--====================================================
+-- 강화 시스템
+
+-- 강화 UI 오픈
+function ReinforceUIOpen()
+    -- 강화 관련 정보 요청
+    Client.FireEvent("ReinforceUIOpen")
+    
+
+    -- 강화 관련 정보 표시
+
+end
+
+
+-- 강화 요청
+function StartReinforce()
+    Client.FireEvent("StartReinforce")
+end
 
