@@ -39,6 +39,7 @@ local HeartPanel = WeaponUI.GetChild("HeartPanel")
 HeartResult = HeartPanel.GetChild("HeartResult") -- 지속 변수
 HeartResultText = HeartPanel.GetChild("HeartResultText") -- 지속 변수
 HeartResult.width = 0
+local HeartMAX = 350
 -- 호감도 커트라인
 local HeartBad = 70
 local HeartNormal = 140
@@ -83,7 +84,7 @@ end
 
 -- 호감도 갱신
 local RefreshWeaponHeart = function(WeaponHeart)
-    HeartResultText.text = math.floor(WeaponHeart / 350 * 100).." %"
+    HeartResultText.text = math.floor(WeaponHeart / HeartMAX * 100).." %"
     HeartResult.width = WeaponHeart
 end
 
@@ -336,16 +337,20 @@ end
 --====================================================
 -- 강화 시스템
 
--- 강화 UI 오픈
+-- 강화 UI 열기
 function ReinforceUIOpen()
     -- 강화 관련 정보 요청
+    ReinforceUI.visible = true
     Client.FireEvent("ReinforceUIOpen")
-    
+
 
     -- 강화 관련 정보 표시
 
 end
-
+-- 닫기
+function ReinforceUIClose()
+    ReinforceUI.visible = false
+end
 
 -- 강화 요청
 function StartReinforce()
