@@ -45,6 +45,13 @@ local HeartNormal = 140
 local HeartGood = 210
 local HeartVeryGood = 280
 
+-- 선물 주기 UI init
+local GiftMainUI = Client.LoadPage("GiftToWeaponUI")
+local GiftUI = GiftMainUI.GetControl("MainPanel")
+local GiftItemPanel = GiftUI.GetChild("ItemPanel")
+local HamstoneLeft = GiftItemPanel.GetChild("HamstoneLeft")
+local SHamstoneLeft = GiftItemPanel.GetChild("SHamstoneLeft")
+GiftUI.visible = false
 
 --=====================================
 --무기 대화용 랜덤 시드
@@ -62,6 +69,11 @@ function EgoWeaponUIBtOn()
     EgoWeaponUIBt.visible = true
 end
 
+-- 호감도 갱신
+local RefreshWeaponHeart = function(WeaponHeart)
+    HeartResultText.text = math.floor(WeaponHeart / 350 * 100).." %"
+    HeartResult.width = WeaponHeart
+end
 
 -- 서버 통신 함수
 local serverYas = function(WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponSP, WeaponHeart, WeaponExp)
@@ -81,13 +93,12 @@ local serverYas = function(WeaponType, WeaponLevel, WeaponATK, WeaponCri, Weapon
     WeaponCriText.text = WeaponCri
     WeaponCriPerText.text = WeaponCriPer
     WeaponSPText.text = WeaponSP
-    HeartResultText.text = math.floor(WeaponHeart / 350 * 100).." %"
-    -- HeartResultText.text = WeaponHeart.." %"
-    HeartResult.width = WeaponHeart
+    RefreshWeaponHeart(WeaponHeart)
     WeaponExpText.text = WeaponExp
     
     -- print("클라 정상 작동 완료")
 end
+
 
 -- 열기, 기능 자동 실행
 function EgoWeaponUIOpen()
@@ -108,6 +119,7 @@ end
 function WeaponUIClose()
     WeaponUI.visible = false
     WeaponUI.enabled = false
+    GiftUI.visible = false
 
     Client.GetTopic("ReplyServerValue").Remove(serverYas)
 end
@@ -272,38 +284,39 @@ end
 
 --======================================================================
 -- 무기에게 선물 주기
--- 선물 주기 UI init
-local GiftMainUI = Client.LoadPage("GiftToWeaponUI")
-local GiftUI = GiftMainUI.GetControl("MainPanel")
-GiftUI.visible = false
+
+-- UI 닫기
+function GiftUIOff()
+    GiftUI.visible = false
+    -- 토픽 제거하기
+    Client.GetTopic("ReplyServerHamstones").Remove(HamstoneNumber)
+end
 
 -- UI 열기
 function GiftUIOn()
+    -- print("호감도 아이템 UI 오픈")
     if GiftUI.visible == false then
         GiftUI.visible = true
+        -- 남아 있는 햄스톤, 슈퍼햄스톤 개수 서버에 요청
+        Client.FireEvent("CallServerHamstones")
     else 
         GiftUIOff()
     end
 end
-    -- print("호감도 아이템 UI 오픈")
-    -- 남아 있는 햄스톤, 슈퍼햄스톤 개수 서버에 요청
-    -- 받아온 개수 표시    
-    -- 토픽 제거하기
--- UI 닫기
-function GiftUIOff()
-    GiftUI.visible = false
+
+--햄스톤 개수 표시하기
+local HamstoneNumber = function(hams, shams, WeaponHeart)
+    HamstoneLeft.text = "개수: "..hams
+    SHamstoneLeft.text = "개수: "..shams
+    RefreshWeaponHeart(WeaponHeart)
+    print("햄스톤 개수 표시 완료")
 end
+Client.GetTopic("ReplyServerHamstones").Add(HamstoneNumber)
 
 -- 버튼 입력 처리
 function GiftToWeapon(n)
     -- print("햄스톤 시퀀스 작동 개시")
     -- 서버에게 요청
-    -- 요청한 버튼이 햄스톤인지 슈퍼햄스톤인지 판단 (n으로)
-
-    -- 가방 안에 해당 햄스톤이 존재하는지 판단
-    -- 있으면 1개 제거 요청
-
-    -- 무기 호감도 상승 요청
     Client.FireEvent("GiftToWeapon", n)
 end
 
