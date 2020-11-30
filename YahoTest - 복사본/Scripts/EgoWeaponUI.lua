@@ -355,11 +355,13 @@ end
 -- 강화 UI 열기
 function ReinforceUIOpen()
     -- 강화 관련 정보 요청
+    -- print("강화 UI 오픈 요청합니다")
     ReinforceUI.visible = true
     Client.FireEvent("ReinforceUIOpen")
 end
 -- 새로고침
-local RefreshReinforceUI = function(MStones, ReinLevel)
+local ReplyServerReinforceUI = function(MStones, ReinLevel)
+    -- print("강화 UI 새로고침합니다")
     -- 강화 관련 정보 표시
     WeaponLevelText.text = ReinLevel
     MStoneText.text = MStones.."개"
@@ -368,20 +370,20 @@ local RefreshReinforceUI = function(MStones, ReinLevel)
     SuccessText.text = 100 - (ReinLevel * 5).."%"
     FailText.text = (ReinLevel * 5).."%"
 end
-local ReplyServerReinforceUI = function(MStones, ReinLevel)
-    RefreshReinforceUI(MStones, ReinLevel)
-end
 Client.GetTopic("ReplyServerReinforceUI").Add(ReplyServerReinforceUI)
 
 
 -- 닫기
 function ReinforceUIClose()
     ReinforceUI.visible = false
-    Client.GetTopic("ReplyServerReinforceUI").Remove(ReplyServerReinforceUI)
+    -- Client.GetTopic("ReplyServerReinforceUI").Remove(ReplyServerReinforceUI)
+    -- print("강화 UI 종료합니다")
 end
 
 -- -- 강화 요청
 function StartReinforce()
+    -- print("강화 실행 요청합니다")
     Client.FireEvent("StartReinforce")
+    -- Client.GetTopic("ReplyServerReinforceUI").Remove(ReplyServerReinforceUI)
 end
 
