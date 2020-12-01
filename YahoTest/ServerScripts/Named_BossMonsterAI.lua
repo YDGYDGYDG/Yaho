@@ -30,8 +30,8 @@ function BlueGobline(enemy,ai,event,data)
         if AngryMode == 1 and enemy.hp >= enemy.maxHP * 0.32 then
             AngryMode = 0
             enemy.say('허억.. 허억..')
-            enemy.SetStat(0, Server.GetMonster(23).attack)
-            enemy.SetStat(1, Server.GetMonster(23).defense)
+            enemy.SetStat(0, Server.GetMonster(101).attack)
+            enemy.SetStat(1, Server.GetMonster(101).defense)
             enemy.moveSpeed = 100
             enemy.monsterData.attackTime = 1
             enemy.SendUpdated()
@@ -49,7 +49,7 @@ function BlueGobline(enemy,ai,event,data)
                or (math.abs(enemy.y-enemy.field.GetUnit(ai.GetTargetUnitID()).y) >= 300) then
             
             if ai.GetTargetUnit() ~= nil then
-                enemy.say('타겟이 사라졌군..')
+                enemy.say('크르르....')
             end
             
             ai.SetFollowTarget(false) --타겟이 사라졌으면 추적을 비활성화 
@@ -59,11 +59,11 @@ function BlueGobline(enemy,ai,event,data)
             -- 주변을 탐색 후 타겟을 찾았으면(nil이 아니면), 추적을 활성화(true), 메세지출력
             if ai.GetTargetUnit() ~= nil then 
                 ai.SetFollowTarget(true) 
-                enemy.say('타겟 발견! \n추적 시작!')
+                enemy.say('인...간!! \n캬악!!')
             end
         end
         
-        --타겟이 있으면 타겟 방향을 향해 6번 스킬을 발사
+        --타겟이 있으면 타겟을 향해 스킬사용
         if ai.GetTargetUnit() ~= nil then
             if ai.customData.delay > 0 then
                 ai.customData.delay = ai.customData.delay - 1
@@ -77,13 +77,17 @@ function BlueGobline(enemy,ai,event,data)
             if ai.customData.delay <= 0 then
                 local ran = rand(1,101) -- 1부터 100까지 아무 숫자
                 if ran <= 20 then -- 20 이하 일 경우
-                    ai.customData.skill = 7 -- 7번 스킬
+                    ai.customData.skill = 203 -- 스킬 1
                     ai.customData.delay = 1 -- 딜레이 3초 (ai함수 반복이 2초마다 이루어짐 따라서 2*2(4초))
-                    enemy.field.SendCenterLabel("<Color=Red>[*]</color> " .. ai.customData.delay+2 .. "초 뒤, 어흥합니다.")
+                    enemy.field.SendCenterLabel("<Color=Red>[*]</color> " .. ai.customData.delay+2 .. "초 뒤, 포효합니다.")
                 elseif ran <= 40 then -- 20~ 40 이하 일 경우
-                    ai.customData.skill = 8 -- 8번 스킬
+                    ai.customData.skill = 204 -- 스킬 2
                     ai.customData.delay = 2 -- 딜레이 4초 (ai함수 반복이 2초마다 이루어짐 따라서 2*2(4초))
-                    enemy.field.SendCenterLabel("<Color=Red>[*]</color> " .. ai.customData.delay+2 .. "초 뒤, 번개를 발사합니다.")
+                    enemy.field.SendCenterLabel("<Color=Red>[*]</color> " .. ai.customData.delay+2 .. "초 뒤, 갈래 번개를 발사합니다.")
+                elseif ran <= 50 then -- 40~50 이하 일 경우
+                    enemy.field.SpawnEnemy(8,enemy.x,enemy.y)
+                    enemy.field.SpawnEnemy(8,enemy.x,enemy.y)
+                    enemy.field.SendCenterLabel("<Color=Red>[*]</color> 고블린이 등장합니다.")
                 end
             end
         end
@@ -104,13 +108,13 @@ function BlueGobline(enemy,ai,event,data)
             if ai.GetTargetUnit() ~= ai.GetAttackedUnit() then 
                 ai.SetTargetUnit(ai.GetAttackedUnit())
                 ai.SetFollowTarget(true)
-                enemy.say('새로운 공격자를 추적한다..')
+                enemy.say('크륵..!')
             end
             
-            -- 몬스터가 공격당할시 10% 확률로 짱짱쌘 5번 공격 기술을 시전하고 서버전체에 메세지 출력
+            -- 몬스터가 공격당할시 10% 확률로 포효
             if math.random(0,99) <= 9 then
-                ai.UseSkill(6)
-                enemy.field.SendCenterLabel('<color=#FF0000>크롸롸!!</color>\n번개왕 고블린이 울부짖습니다!')
+                ai.UseSkill(203)
+                enemy.field.SendCenterLabel('<color=#FF0000>크아아악!!</color>\n번개왕 자보로그가 울부짖습니다!')
             end
         end
     end
@@ -119,9 +123,9 @@ function BlueGobline(enemy,ai,event,data)
 		-- 사망 시, 리스폰 시간을 적용해둔 개발자들을 위해 몬스터의 ai 데이터 및 스텟 초기화
 		ai.customData.skill = 0
 		ai.customData.delay = 0
-		enemy.moveSpeed = Server.GetMonster(23).moveSpeed
-		enemy.SetStat(0, Server.GetMonster(23).attack)
-		enemy.SetStat(1, Server.GetMonster(23).defense)
+		enemy.moveSpeed = Server.GetMonster(101).moveSpeed
+		enemy.SetStat(0, Server.GetMonster(101).attack)
+		enemy.SetStat(1, Server.GetMonster(101).defense)
 		enemy.SendUpdated()
 	end
 
@@ -194,16 +198,16 @@ function Golem(enemy,ai,event,data)
             if ai.customData.delay <= 0 then
                 local ran = rand(1,101) -- 1부터 100까지 아무 숫자
                 if ran <= 20 then -- 20 이하 일 경우
-                    ai.customData.skill = 10 -- 7번 스킬
+                    ai.customData.skill = 223 -- 스킬 1
                     ai.customData.delay = 1 -- 딜레이 3초 (ai함수 반복이 2초마다 이루어짐 따라서 2*2(4초))
                     enemy.field.SendCenterLabel("<Color=Red>[*]</color> " .. ai.customData.delay+2 .. "초 뒤, 쾅쾅합니다.")
                 elseif ran <= 40 then -- 20~ 40 이하 일 경우
-                    ai.customData.skill = 9 -- 8번 스킬
+                    ai.customData.skill = 224 -- 스킬 2
                     ai.customData.delay = 2 -- 딜레이 4초 (ai함수 반복이 2초마다 이루어짐 따라서 2*2(4초))
                     enemy.field.SendCenterLabel("<Color=Red>[*]</color> " .. ai.customData.delay+2 .. "초 뒤, 슝슝합니다.")
                 elseif ran <= 50 then -- 40~50 이하 일 경우
                     enemy.field.SpawnEnemy(10,enemy.x,enemy.y)
-                    enemy.field.SpawnEnemy(10,enemy.x+1,enemy.y+1)
+                    enemy.field.SpawnEnemy(10,enemy.x,enemy.y)
                     enemy.field.SendCenterLabel("<Color=Red>[*]</color> 깜돌더미가 등장합니다.")
                 end
             end
@@ -230,7 +234,7 @@ function Golem(enemy,ai,event,data)
             
             -- 몬스터가 공격당할시 10% 확률로 짱짱쌘 5번 공격 기술을 시전하고 서버전체에 메세지 출력
             if math.random(0,99) <= 9 then
-                ai.UseSkill(6)
+                ai.UseSkill(223)
                 enemy.field.SendCenterLabel('<color=#FF0000>!!</color>\n마기를 흡수한 골렘이 쿵쾅거립니다!')
             end
         end
@@ -240,9 +244,9 @@ function Golem(enemy,ai,event,data)
 		-- 사망 시, 리스폰 시간을 적용해둔 개발자들을 위해 몬스터의 ai 데이터 및 스텟 초기화
 		ai.customData.skill = 0
 		ai.customData.delay = 0
-		enemy.moveSpeed = Server.GetMonster(24).moveSpeed
-		enemy.SetStat(0, Server.GetMonster(24).attack)
-		enemy.SetStat(1, Server.GetMonster(24).defense)
+		enemy.moveSpeed = Server.GetMonster(102).moveSpeed
+		enemy.SetStat(0, Server.GetMonster(102).attack)
+		enemy.SetStat(1, Server.GetMonster(102).defense)
 		enemy.SendUpdated()
 	end
 
@@ -252,5 +256,5 @@ end
 
 
 
-Server.SetMonsterAI(23, BlueGobline) -- 23번 몬스터에게 BlueGobline 적용
-Server.SetMonsterAI(24, Golem) -- 24번 몬스터에게 Golem 적용
+Server.SetMonsterAI(101, BlueGobline) -- 101번 몬스터에게 BlueGobline 적용
+Server.SetMonsterAI(102, Golem) -- 102번 몬스터에게 Golem 적용
