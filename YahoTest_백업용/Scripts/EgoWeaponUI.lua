@@ -58,6 +58,8 @@ GiftUI.visible = false
 local ReinforceMainUI = Client.LoadPage("ReinforceUI")
 local ReinforceUI = ReinforceMainUI.GetControl("MainPanel")
 local ReinforcePanel = ReinforceUI.GetChild("ReinforcePanel")
+local WeaponImageBG = ReinforcePanel.GetChild("WeaponImageBG")
+local W_Image = WeaponImageBG.GetChild("W_Image")
 local MStoneText = ReinforcePanel.GetChild("MStoneText")
 local ReinLevelText = ReinforcePanel.GetChild("ReinLevelText")
 local NextLevelText = ReinforcePanel.GetChild("NextLevelText")
@@ -72,7 +74,7 @@ ReinforceUI.visible = false
 -- 랜덤 사용
 math.randomseed(os.time())
 -- 랜덤 변수
-local TalkRandMax = 4
+local TalkRandMax = 9
 local TalkRandMin = 0
 
 
@@ -96,10 +98,13 @@ local serverYas = function(WeaponType, WeaponLevel, WeaponATK, WeaponCri, Weapon
     --가져온 캐릭터 수치 반영
     if WeaponType == 20 then
         WeaponImage.image = "Pictures/001_ewp_sword.png"
+        W_Image.image = "Pictures/001_ewp_sword.png"
     elseif WeaponType == 21 then
         WeaponImage.image = "Pictures/061_ewp_hammer.png"
+        W_Image.image = "Pictures/061_ewp_hammer.png"
     elseif WeaponType == 22 then
         WeaponImage.image = "Pictures/031_ewp_spear.png"
+        W_Image.image = "Pictures/031_ewp_spear.png"
     end
     WeaponLevelText.text = WeaponLevel
     WeaponATKText.text = WeaponATK
@@ -158,21 +163,31 @@ function TalkWithWeapon()
 
     if HeartResult.width < HeartBad then
         if rand == 0 then
-            WeaponTalkText.text = "꺼져."
+            WeaponTalkText.text = "말 걸지 마세요."
         elseif rand == 1 then
-            WeaponTalkText.text = "반으로 갈라져서 죽어."
+            WeaponTalkText.text = "당신이 싫어요."
         elseif rand == 2 then
-            WeaponTalkText.text = "뭘 봐?"
+            WeaponTalkText.text = "하찮네요."
         elseif rand == 3 then
-            WeaponTalkText.text = "인생 왜사니?"
+            WeaponTalkText.text = "반드시 장갑을 끼고 만지세요."
         elseif rand == 4 then
-            WeaponTalkText.text = "즐."
+            WeaponTalkText.text = "귀찮게 하지 마세요."
+        elseif rand == 5 then
+            WeaponTalkText.text = "싸울 마음은 있어요?"
+        elseif rand == 6 then
+            WeaponTalkText.text = "(한숨)"
+        elseif rand == 7 then
+            WeaponTalkText.text = "하~암... 지루하네요."
+        elseif rand == 8 then
+            WeaponTalkText.text = "솜씨가 형편없네요."
+        elseif rand == 9 then
+            WeaponTalkText.text = "나는 그냥 무기가 아니에요."
         end
     elseif HeartResult.width >= HeartBad and HeartResult.width < HeartNormal then
         if rand == 0 then
-            WeaponTalkText.text = "너 싫어."
+            WeaponTalkText.text = ""
         elseif rand == 1 then
-            WeaponTalkText.text = "..."
+            WeaponTalkText.text = ""
         elseif rand == 2 then
             WeaponTalkText.text = ""
         elseif rand == 3 then
@@ -226,21 +241,21 @@ function AdviceByWeapon()
 
     if HeartResult.width < HeartBad then
         if rand == 0 then
-            WeaponTalkText.text = "% 게임 접어~"
+            WeaponTalkText.text = "좀 더 갈고 닦으세요."
         elseif rand == 1 then
-            WeaponTalkText.text = "Alt + f4를 눌러봐. 마법의 주문이야."
+            WeaponTalkText.text = "나를 원한다면 좀 더 성의를 보이세요."
         elseif rand == 2 then
-            WeaponTalkText.text = "너 따위한테 해 줄 조언은 없어."
+            WeaponTalkText.text = ""
         elseif rand == 3 then
-            WeaponTalkText.text = "부모님께 효도해라. 아...맞다. 미안?"
+            WeaponTalkText.text = ""
         elseif rand == 4 then
-            WeaponTalkText.text = "ㅗ"
+            WeaponTalkText.text = ""
         end
     elseif HeartResult.width >= HeartBad and HeartResult.width < HeartNormal then
         if rand == 0 then
-            WeaponTalkText.text = "너 싫어."
+            WeaponTalkText.text = ""
         elseif rand == 1 then
-            WeaponTalkText.text = "..."
+            WeaponTalkText.text = ""
         elseif rand == 2 then
             WeaponTalkText.text = ""
         elseif rand == 3 then
@@ -340,20 +355,35 @@ end
 -- 강화 UI 열기
 function ReinforceUIOpen()
     -- 강화 관련 정보 요청
+    -- print("강화 UI 오픈 요청합니다")
     ReinforceUI.visible = true
     Client.FireEvent("ReinforceUIOpen")
-
-
-    -- 강화 관련 정보 표시
-
 end
+-- 새로고침
+local ReplyServerReinforceUI = function(MStones, ReinLevel)
+    -- print("강화 UI 새로고침합니다")
+    -- 강화 관련 정보 표시
+    WeaponLevelText.text = ReinLevel
+    MStoneText.text = MStones.."개"
+    ReinLevelText.text = ReinLevel
+    NextLevelText.text = ReinLevel + 1
+    SuccessText.text = 100 - (ReinLevel * 5).."%"
+    FailText.text = (ReinLevel * 5).."%"
+end
+Client.GetTopic("ReplyServerReinforceUI").Add(ReplyServerReinforceUI)
+
+
 -- 닫기
 function ReinforceUIClose()
     ReinforceUI.visible = false
+    -- Client.GetTopic("ReplyServerReinforceUI").Remove(ReplyServerReinforceUI)
+    -- print("강화 UI 종료합니다")
 end
 
--- 강화 요청
+-- -- 강화 요청
 function StartReinforce()
+    -- print("강화 실행 요청합니다")
     Client.FireEvent("StartReinforce")
+    -- Client.GetTopic("ReplyServerReinforceUI").Remove(ReplyServerReinforceUI)
 end
 
