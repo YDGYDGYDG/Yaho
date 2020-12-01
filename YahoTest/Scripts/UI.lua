@@ -59,6 +59,7 @@ function HUDOff()
 	BAR_HP.visible = false
 	BAR_MP.visible = false
 	BAR_EXP.visible = false
+	ManaStoneText.visible = false
 end
 
 function HUDOn()
@@ -72,6 +73,7 @@ function HUDOn()
 	BAR_HP.visible = true
 	BAR_MP.visible = true
 	BAR_EXP.visible = true
+	ManaStoneText.visible = true
 end
 
 local ViewManaStoneText = function(num)
