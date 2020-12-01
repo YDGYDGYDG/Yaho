@@ -18,23 +18,24 @@ local clientYas = function()
     local EquipedWeapon = unit.GetEquipItem(2)
     if EquipedWeapon == nil then
         unit.SendSay("무기를 가지고 있지 않습니다.")
-    end
-    -- 무기 정보 복사
-    local WeaponType = EquipedWeapon.dataID
-    local WeaponLevel = EquipedWeapon.level
-    -- 캐릭터 정보 복사 [장비중인 무기 프로퍼티, atk, cri, criPer, SP, heart]
-    local WeaponATK = unit.atk
-    local WeaponCri = unit.GetStat(101)
-    local WeaponCriPer = unit.GetStat(102)
-    local WeaponSP = unit.GetStat(103)
-    local WeaponHeart = unit.GetStat(104)
-    if WeaponHeart > 350 then
-        unit.SetStat(104, 350)
-    end
-    local WeaponExp = unit.GetStat(105)
+    else
+        -- 무기 정보 복사
+        local WeaponType = EquipedWeapon.dataID
+        local WeaponLevel = EquipedWeapon.level
+        -- 캐릭터 정보 복사 [장비중인 무기 프로퍼티, atk, cri, criPer, SP, heart]
+        local WeaponATK = unit.atk
+        local WeaponCri = unit.GetStat(101)
+        local WeaponCriPer = unit.GetStat(102)
+        local WeaponSP = unit.GetStat(103)
+        local WeaponHeart = unit.GetStat(104)
+        if WeaponHeart > 350 then
+            unit.SetStat(104, 350)
+        end
+        local WeaponExp = unit.GetStat(105)
 
-    -- 클라에게 전달
-    Server.FireEvent("ReplyServerValue", WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponSP, WeaponHeart, WeaponExp)
+        -- 클라에게 전달
+        Server.FireEvent("ReplyServerValue", WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponSP, WeaponHeart, WeaponExp)
+    end
     -- unit.SendSay("서버 정상 작동 완료")
 end
 
