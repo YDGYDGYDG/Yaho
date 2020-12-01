@@ -85,8 +85,8 @@ function BlueGobline(enemy,ai,event,data)
                     ai.customData.delay = 2 -- 딜레이 4초 (ai함수 반복이 2초마다 이루어짐 따라서 2*2(4초))
                     enemy.field.SendCenterLabel("<Color=Red>[*]</color> " .. ai.customData.delay+2 .. "초 뒤, 갈래 번개를 발사합니다.")
                 elseif ran <= 50 then -- 40~50 이하 일 경우
-                    enemy.field.SpawnEnemy(8,enemy.x,enemy.y)
-                    enemy.field.SpawnEnemy(8,enemy.x,enemy.y)
+                    enemy.field.SpawnEnemy(7,enemy.x,enemy.y)
+                    enemy.field.SpawnEnemy(7,enemy.x,enemy.y)
                     enemy.field.SendCenterLabel("<Color=Red>[*]</color> 고블린이 등장합니다.")
                 end
             end
