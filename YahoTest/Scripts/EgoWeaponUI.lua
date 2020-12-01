@@ -337,7 +337,7 @@ local HamstoneNumber = function(hams, shams, WeaponHeart)
     HamstoneLeft.text = "개수: "..hams
     SHamstoneLeft.text = "개수: "..shams
     RefreshWeaponHeart(WeaponHeart)
-    print("햄스톤 개수 표시 완료")
+    -- print("햄스톤 개수 표시 완료")
 end
 Client.GetTopic("ReplyServerHamstones").Add(HamstoneNumber)
 

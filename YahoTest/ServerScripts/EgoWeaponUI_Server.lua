@@ -60,8 +60,6 @@ Server.onRefreshStats.Add(ForceEquipWeapon)
 Server.GetTopic("ForceEquipWeaponFirst").Add(ForceEquipWeaponFirst)
 
 
-
-
 --=========================================================================
 --호감도
 
@@ -70,7 +68,7 @@ local GiftUIOpen = function()
     local shams = unit.CountItem(9)
     local WeaponHeart = unit.GetStat(104)
     Server.FireEvent("ReplyServerHamstones", hams, shams, WeaponHeart)
-    unit.SendSay("햄스톤 개수 정보 전달 완료.")
+    -- unit.SendSay("햄스톤 개수 정보 전달 완료.")
 end
 
 Server.GetTopic("CallServerHamstones").Add(GiftUIOpen)
@@ -123,15 +121,14 @@ Server.GetTopic("GiftToWeapon").Add(GiftToWeapon)
 
 --====================================================
 -- 호감도에 의한 스탯 배율 변화
-
--- 능력치가 변할 때마다 콜백되는 함수
-
 -- 0~350 으로 공격력/치명/치명배율에 추가분 지급
-local PowerOfLove = function()
-    local WeaponHeart = unit.GetStat(104)
+-- local PowerOfLove = function()
+--     local WeaponHeart = unit.GetStat(104)
     
+-- end
+-- -- 능력치가 변할 때마다 콜백되는 함수
+-- Server.onRefreshStats.Add(PowerOfLove)
 
-end
 
 
 --====================================================
