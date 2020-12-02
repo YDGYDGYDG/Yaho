@@ -240,7 +240,8 @@ function Golem(enemy,ai,event,data)
         end
     end
 
-	if (event == 2) then -- 사망 시
+    if (event == 2) then -- 사망 시
+        ai.UseSkill(229)
 		-- 사망 시, 리스폰 시간을 적용해둔 개발자들을 위해 몬스터의 ai 데이터 및 스텟 초기화
 		ai.customData.skill = 0
 		ai.customData.delay = 0
