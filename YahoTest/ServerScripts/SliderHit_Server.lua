@@ -13,3 +13,6 @@ Server.GetTopic("SlliderHitResult").Add(function(ATKResult)
     Server.FireEvent("UseSkill", 4)
 end)
 
+Server.damageCallback = function(a, b, damage, SkillID)
+    return a.atk - b.def
+end
