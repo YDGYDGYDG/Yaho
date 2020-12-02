@@ -95,6 +95,9 @@ WAY_Slider_Hitbar_Perfect.enabled = false
 local UIresult = WAY_Slider_Hitbar_Bad
 local ATKResult = 0
 
+-- 필살기 판단용
+local U_SkillID = 0
+
 --페이드아웃
 local UIresultFadeOut = 255
 
@@ -108,9 +111,9 @@ local Func_MoveCount_Hitbar2 = 0
 
 
 --유저의 필살 발동으로 슬라이더 UI 표시하는 함수
-function WAY_SliderHitOn()
+function WAY_SliderHitOn(U_Skillnumber)
     local Page = Client.LoadPage("SliderHit")
-
+    U_SkillID = U_Skillnumber
     --초기화
     WAY_Slider_Hitbar1.enabled = true
     WAY_Slider_Hitbar1.visible = true
@@ -287,7 +290,7 @@ end
 
 Client.onTick.Add(SliderHitResultFadeOut)
 
-Client.GetTopic("UseSkill").Add(function(skillID)
-    unit.UseSkill(skillID)
+Client.GetTopic("UseSkill").Add(function()
+    unit.UseSkill(U_SkillID)
 end)
 
