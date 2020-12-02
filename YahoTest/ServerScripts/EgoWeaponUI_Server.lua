@@ -170,6 +170,9 @@ local StartReinforce = function()
                 EquipedWeapon.level = EquipedWeapon.level + 1
                 -- 성공 알림
                 unit.StartGlobalEvent(2)
+                -- 강화된 무기 수치 반영 요청하기
+                unit.UnequipItem(2)
+                clientYas()
             else
                 unit.RemoveItem(1, 1, true, true, false)
                 -- 실패 알림
