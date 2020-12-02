@@ -8,6 +8,8 @@ local ReinforceRandMax = 100
 local ReinforceRandMin = 0
 local ReinforceSucRate = 0
 
+local HeartMax = 300
+
 --======================================================================
 -- 무기 장착
 
@@ -28,8 +30,8 @@ local clientYas = function()
         local WeaponCriPer = unit.GetStat(102)
         local WeaponSP = unit.GetStat(103)
         local WeaponHeart = unit.GetStat(104)
-        if WeaponHeart > 350 then
-            unit.SetStat(104, 350)
+        if WeaponHeart > HeartMax then
+            unit.SetStat(104, HeartMax)
         end
         local WeaponExp = unit.GetStat(105)
 
@@ -85,12 +87,14 @@ local GiftToWeapon = function(n)
     if n == 10 then
         if hams >= 1 then
             -- 무기 호감도 상승 요청
-            if unit.GetStat(104) < 350 then
+            if unit.GetStat(104) < HeartMax then
                 unit.RemoveItem(8, 1, true, true, false)
                 unit.SetStat(104, unit.GetStat(104) + n)
                 -- unit.SendSay("햄스톤 시퀀스 성공 종료")
+                -- 호감도 변경 대사 출력 요청
+                Server.FireEvent("GiftWeaponFeedback")
             else
-                unit.SetStat(104, 350)
+                unit.SetStat(104, HeartMax)
                 unit.SendSay("이미 호감도가 최대입니다.")
             end
         else
@@ -99,12 +103,13 @@ local GiftToWeapon = function(n)
     elseif n == 20 then
         if shams >= 1 then
                 -- 무기 호감도 상승 요청
-            if unit.GetStat(104) < 350 then
+            if unit.GetStat(104) < HeartMax then
                 unit.RemoveItem(9, 1, true, true, false)
                 unit.SetStat(104, unit.GetStat(104) + n)
                 -- unit.SendSay("햄스톤 시퀀스 성공 종료"")
+                Server.FireEvent("GiftWeaponFeedback")
             else
-                unit.SetStat(104, 350)
+                unit.SetStat(104, HeartMax)
                 unit.SendSay("이미 호감도가 최대입니다.")
             end
         else
@@ -122,7 +127,7 @@ Server.GetTopic("GiftToWeapon").Add(GiftToWeapon)
 
 --====================================================
 -- 호감도에 의한 스탯 배율 변화
--- 0~350 으로 공격력/치명/치명배율에 추가분 지급
+-- 0~300 으로 공격력/치명/치명배율에 추가분 지급
 -- local PowerOfLove = function()
 --     local WeaponHeart = unit.GetStat(104)
     

@@ -34,17 +34,17 @@ local WeaponLevelText = LevelTexts.GetChild("LevelResultText")
 local ExpTexts = WeaponUI.GetChild("WeaponExp")
 local WeaponExpText = ExpTexts.GetChild("ExpResultText")
 
---무기 호감도 (0 ~ 350 넓이조절)
+--무기 호감도 (0 ~ 300 넓이조절)
 local HeartPanel = WeaponUI.GetChild("HeartPanel")
 HeartResult = HeartPanel.GetChild("HeartResult") -- 지속 변수
 HeartResultText = HeartPanel.GetChild("HeartResultText") -- 지속 변수
 HeartResult.width = 0
-local HeartMAX = 350
+local HeartMAX = 300
 -- 호감도 커트라인
-local HeartBad = 70
-local HeartNormal = 140
-local HeartGood = 210
-local HeartVeryGood = 280
+local HeartBad = 60
+local HeartNormal = 120
+local HeartGood = 180
+local HeartVeryGood = 240
 
 -- 선물 주기 UI init
 local GiftMainUI = Client.LoadPage("GiftToWeaponUI")
@@ -74,6 +74,8 @@ ReinforceUI.visible = false
 -- 랜덤 사용
 math.randomseed(os.time())
 -- 랜덤 변수
+local FeedbackRandMax = 4
+local AdviceRandMax = 4
 local TalkRandMax = 9
 local TalkRandMin = 0
 
@@ -237,7 +239,7 @@ end
 
 -- 무기의 조언 얻기
 function AdviceByWeapon()
-    local rand = math.random(TalkRandMin, TalkRandMax)
+    local rand = math.random(TalkRandMin, AdviceRandMax)
 
     if HeartResult.width < HeartBad then
         if rand == 0 then
@@ -303,6 +305,8 @@ function AdviceByWeapon()
 
 end
 
+
+
 -- 무기 장착하기
 function ForceEquipWeapon()
     -- print("최초 무기 장착 시퀀스 작동 개시")
@@ -348,6 +352,74 @@ function GiftToWeapon(n)
     Client.FireEvent("GiftToWeapon", n)
 end
 
+-- 무기에게 선물 줄 때마다 대사 바꾸기
+local GiftWeaponFeedback = function()
+    local rand = math.random(TalkRandMin, FeedbackRandMax)
+
+    if HeartResult.width < HeartBad then
+        if rand == 0 then
+            WeaponTalkText.text = "아직 멀었어요."
+        elseif rand == 1 then
+            WeaponTalkText.text = "더 좋은 건 없나요?"
+        elseif rand == 2 then
+            WeaponTalkText.text = "나름대로 노력하시나 보네요."
+        elseif rand == 3 then
+            WeaponTalkText.text = "칭찬은 해 드리죠."
+        elseif rand == 4 then
+            WeaponTalkText.text = "받아는 드리죠."
+        end
+    elseif HeartResult.width >= HeartBad and HeartResult.width < HeartNormal then
+        if rand == 0 then
+            WeaponTalkText.text = ""
+        elseif rand == 1 then
+            WeaponTalkText.text = ""
+        elseif rand == 2 then
+            WeaponTalkText.text = ""
+        elseif rand == 3 then
+            WeaponTalkText.text = ""
+        elseif rand == 4 then
+            WeaponTalkText.text = ""
+        end
+    elseif HeartResult.width >= HeartNormal and HeartResult.width < HeartGood then
+        if rand == 0 then
+            WeaponTalkText.text = ""
+        elseif rand == 1 then
+            WeaponTalkText.text = ""
+        elseif rand == 2 then
+            WeaponTalkText.text = ""
+        elseif rand == 3 then
+            WeaponTalkText.text = ""
+        elseif rand == 4 then
+            WeaponTalkText.text = ""
+        end
+    elseif HeartResult.width >= HeartGood and HeartResult.width < HeartVeryGood then
+        if rand == 0 then
+            WeaponTalkText.text = ""
+        elseif rand == 1 then
+            WeaponTalkText.text = ""
+        elseif rand == 2 then
+            WeaponTalkText.text = ""
+        elseif rand == 3 then
+            WeaponTalkText.text = ""
+        elseif rand == 4 then
+            WeaponTalkText.text = ""
+        end
+    elseif HeartResult.width >= HeartVeryGood then
+        if rand == 0 then
+            WeaponTalkText.text = ""
+        elseif rand == 1 then
+            WeaponTalkText.text = ""
+        elseif rand == 2 then
+            WeaponTalkText.text = ""
+        elseif rand == 3 then
+            WeaponTalkText.text = ""
+        elseif rand == 4 then
+            WeaponTalkText.text = ""
+        end
+    end
+    GiftUIOff()
+end
+Client.GetTopic("GiftWeaponFeedback").Add(GiftWeaponFeedback)
 
 --====================================================
 -- 강화 시스템
