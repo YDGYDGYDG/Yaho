@@ -36,7 +36,7 @@ local clientYas = function()
         local WeaponExp = unit.GetStat(105)
 
         -- 클라에게 전달
-        Server.FireEvent("ReplyServerValue", WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponSP, WeaponHeart, WeaponExp)
+        unit.FireEvent("ReplyServerValue", WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponSP, WeaponHeart, WeaponExp)
     end
     -- unit.SendSay("서버 정상 작동 완료")
 end
@@ -70,7 +70,7 @@ local GiftUIOpen = function()
     local hams = unit.CountItem(8)
     local shams = unit.CountItem(9)
     local WeaponHeart = unit.GetStat(104)
-    Server.FireEvent("ReplyServerHamstones", hams, shams, WeaponHeart)
+    unit.FireEvent("ReplyServerHamstones", hams, shams, WeaponHeart)
     -- unit.SendSay("햄스톤 개수 정보 전달 완료.")
 end
 
@@ -92,7 +92,7 @@ local GiftToWeapon = function(n)
                 unit.SetStat(104, unit.GetStat(104) + n)
                 -- unit.SendSay("햄스톤 시퀀스 성공 종료")
                 -- 호감도 변경 대사 출력 요청
-                Server.FireEvent("GiftWeaponFeedback")
+                unit.FireEvent("GiftWeaponFeedback")
             else
                 unit.SetStat(104, HeartMax)
                 unit.SendSay("이미 호감도가 최대입니다.")
@@ -107,7 +107,7 @@ local GiftToWeapon = function(n)
                 unit.RemoveItem(9, 1, true, true, false)
                 unit.SetStat(104, unit.GetStat(104) + n)
                 -- unit.SendSay("햄스톤 시퀀스 성공 종료"")
-                Server.FireEvent("GiftWeaponFeedback")
+                unit.FireEvent("GiftWeaponFeedback")
             else
                 unit.SetStat(104, HeartMax)
                 unit.SendSay("이미 호감도가 최대입니다.")
@@ -119,7 +119,7 @@ local GiftToWeapon = function(n)
     hams = unit.CountItem(8)
     shams = unit.CountItem(9)
     local WeaponHeart = unit.GetStat(104)
-    Server.FireEvent("ReplyServerHamstones", hams, shams, WeaponHeart)
+    unit.FireEvent("ReplyServerHamstones", hams, shams, WeaponHeart)
     -- unit.SendSay("햄스톤 시퀀스 종료")
 end
 
@@ -145,7 +145,7 @@ local ReinforceUIOpen = function()
     local MStones = unit.CountItem(1)
     local EquipedWeapon = unit.GetEquipItem(2)
     local ReinLevel = EquipedWeapon.level
-    Server.FireEvent("ReplyServerReinforceUI", MStones, ReinLevel)
+    unit.FireEvent("ReplyServerReinforceUI", MStones, ReinLevel)
     -- unit.SendSay("강화 UI 오픈 결과 보냅니다")
 end
 Server.GetTopic("ReinforceUIOpen").Add(ReinforceUIOpen)
@@ -190,7 +190,7 @@ local StartReinforce = function()
     end
     MStones = unit.CountItem(1)
     local ReinLevel = EquipedWeapon.level
-    Server.FireEvent("ReplyServerReinforceUI", MStones, ReinLevel)
+    unit.FireEvent("ReplyServerReinforceUI", MStones, ReinLevel)
     -- unit.SendSay("서버 강화 시퀀스 종료")
 end
 Server.GetTopic("StartReinforce").Add(StartReinforce)
