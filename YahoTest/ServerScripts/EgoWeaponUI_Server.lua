@@ -159,12 +159,14 @@ local StartReinforce = function()
     if MStones >= 1 then
         -- 확률 초기화
         ReinforceSucRate = 0
-        ReinforceSucRate = ReinforceSucRate + (100-(EquipedWeapon.level*5))
+        if EquipedWeapon.level < 10 then
+            ReinforceSucRate = (100-(EquipedWeapon.level*8))
+        else
+            ReinforceSucRate = 20
+        end
         -- 무기 레벨 상승 요청
         if EquipedWeapon.level < 100 then
             local rand = math.random(ReinforceRandMin, ReinforceRandMax)
-            -- unit.SendSay(rand)
-            -- unit.SendSay(ReinforceSucRate)
             if ReinforceSucRate >= rand then
                 unit.RemoveItem(1, 1, true, true, false)
                 EquipedWeapon.level = EquipedWeapon.level + 1
