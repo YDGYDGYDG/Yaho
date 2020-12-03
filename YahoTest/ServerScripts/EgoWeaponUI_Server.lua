@@ -14,11 +14,26 @@ local HeartMax = 300
 local ViewWeaponBt = function()
     local WEOnOff = false
     local EquipedWeapon = unit.GetEquipItem(2) -- 무기 란에 장착중인 장비
+    -- 장착하고 있지 않으면...
     if EquipedWeapon == nil then
         WEOnOff = false
+        -- 겸사겸사 무기도 무한 장착하기
+        -- 가방에서 무기 찾기
+        local unitItems = unit.player.GetItems()
+        for i, v in pairs(unitItems) do
+            -- local thisItemID = unit.GetItem(unitItems[i])
+            if Server.GetItem(unitItems[i].dataID).type == 2 then
+                unit.EquipItem(unitItems[i].id, true)
+                -- unit.SendSay("무기 강제 장착했습니다")
+            -- else
+            --     unit.SendSay("무기 없습니다")
+            end
+        end
     else
+        -- unit.SendSay("당신의 무기 번호는"..EquipedWeapon.dataID)
         WEOnOff = true
     end
+    -- unit.SendSay("test")
     unit.FireEvent("ReplyServerWeaponBt", WEOnOff)
 end
 Server.GetTopic("CallServerWeaponBt").Add(ViewWeaponBt)
@@ -56,24 +71,6 @@ end
 
 -- 클라에게서 신호 받기
 Server.GetTopic("CallServerValue").Add(clientYas)
-
--- 무기 강제 장착하기
-local ForceEquipWeapon = function(unit)
-    -- 공격력 판단해서 0이면 무기가 없는 거임
-    if unit.atk < 1 then
-        -- unit.SendSay("무기 해제 감지")
-        unit.EquipItem(2, true)
-        -- unit.SendSay("무기 해제 시퀀스 끝")
-    end
-end
-local ForceEquipWeaponFirst = function()
-    -- unit.SendSay("무기 처음 획득 감지")
-    unit.EquipItem(2, true)
-    -- unit.SendSay("무기 처음 획득 시퀀스 끝")
-end
---스탯이 바뀌면 무기 장착중인지 확인하고 장착하게 하기
-Server.onRefreshStats.Add(ForceEquipWeapon)
-Server.GetTopic("ForceEquipWeaponFirst").Add(ForceEquipWeaponFirst)
 
 
 --=========================================================================

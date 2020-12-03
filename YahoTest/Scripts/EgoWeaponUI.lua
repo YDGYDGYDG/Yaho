@@ -76,18 +76,6 @@ local AdviceRandMax = 4
 local TalkRandMax = 9
 local TalkRandMin = 0
 
-
---=====================================
--- 무기정보 버튼을 보이게 하기
--- function EgoWeaponUIBtOn()
---     EgoWeaponUIBt.visible = true
--- end
--- function EgoWeaponUIBtOff()
---     EgoWeaponUIBt.visible = false
--- end
-
-
-
 -- 호감도 갱신
 local RefreshWeaponHeart = function(WeaponHeart)
     HeartResultText.text = math.floor(WeaponHeart / HeartMAX * 100).." %"
