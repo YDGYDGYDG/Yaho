@@ -22,16 +22,19 @@ local LVText = Text()
 LVText.rect = Rect(10, Client.height-48+18, 122, 31)
 LVText.textSize = 20
 
+local EgoWeaponUI = Client.LoadPage("EgoWeaponUIBt")
+local EgoWeaponUIBt = EgoWeaponUI.GetControl("EgoWeaponBt")
+EgoWeaponUIBt.visible = false
 
-local ManaStoneUI = Client.LoadPage("ManaStoneUI")
-local ManaStoneText = ManaStoneUI.GetControl("ManaStoneText")
+-- local ManaStoneUI = Client.LoadPage("ManaStoneUI")
+-- local ManaStoneText = ManaStoneUI.GetControl("ManaStoneText")
 
 function refreshUI()
 	ScreenUI.hpBarVisible  = false
 	ScreenUI.mpBarVisible  = false
 	ScreenUI.expBarVisible  = false
 	ScreenUI.levelVisible = false
-	ScreenUI.gameMoneyVisible = false
+	-- ScreenUI.gameMoneyVisible = false
 	
 	LVText.text = "LV."..Client.myPlayerUnit.level
 	LVTextOut1.text = "<color=#000000>LV."..Client.myPlayerUnit.level.."</color>"
@@ -43,7 +46,8 @@ function refreshUI()
 	BAR_MP.DOScale(Point(Client.myPlayerUnit.mp/Client.myPlayerUnit.maxMP, 1), 0.5)
 	BAR_EXP.DOScale(Point(Client.myPlayerUnit.exp/Client.myPlayerUnit.maxEXP, 1), 0.5)
 
-	Client.FireEvent("CallServerMana")
+	-- Client.FireEvent("CallServerMana")
+	Client.FireEvent("CallServerWeaponBt")
 end
 
 Client.onTick.Add(refreshUI,1)
@@ -74,11 +78,19 @@ function HUDOn()
 	BAR_EXP.visible = true
 end
 
-local ViewManaStoneText = function(num)
-	-- print("클라 마석 적용 시작")
-	ManaStoneText.text = num.." 마석 조각"
-	Client.GetTopic("ReplyServerManaStone").Remove(ViewManaStoneText)
-	-- print("클라 마석 시퀀스 작동 완료")
-end
-Client.GetTopic("ReplyServerManaStone").Add(ViewManaStoneText)
+-- local ViewManaStoneText = function(num)
+-- 	-- print("클라 마석 적용 시작")
+-- 	ManaStoneText.text = num.." 마석 조각"
+-- 	Client.GetTopic("ReplyServerManaStone").Remove(ViewManaStoneText)
+-- 	-- print("클라 마석 시퀀스 작동 완료")
+-- end
+-- Client.GetTopic("ReplyServerManaStone").Add(ViewManaStoneText)
 
+local ReplyServerWeaponBt = function(WEOnOff)
+	if WEOnOff == true and HPMP.visible == true then
+		EgoWeaponUIBt.visible = true
+	else
+		EgoWeaponUIBt.visible = false
+	end
+end
+Client.GetTopic("ReplyServerWeaponBt").Add(ReplyServerWeaponBt)

@@ -10,6 +10,19 @@ local ReinforceSucRate = 0
 
 local HeartMax = 300
 
+-- 무기 정보 버튼 활성 ==============================
+local ViewWeaponBt = function()
+    local WEOnOff = false
+    local EquipedWeapon = unit.GetEquipItem(2) -- 무기 란에 장착중인 장비
+    if EquipedWeapon == nil then
+        WEOnOff = false
+    else
+        WEOnOff = true
+    end
+    unit.FireEvent("ReplyServerWeaponBt", WEOnOff)
+end
+Server.GetTopic("CallServerWeaponBt").Add(ViewWeaponBt)
+
 --======================================================================
 -- 무기 장착
 
