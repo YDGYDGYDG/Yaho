@@ -85,6 +85,9 @@ local TalkRandMin = 0
 function EgoWeaponUIBtOn()
     EgoWeaponUIBt.visible = true
 end
+function EgoWeaponUIBtOff()
+    EgoWeaponUIBt.visible = false
+end
 
 -- 호감도 갱신
 local RefreshWeaponHeart = function(WeaponHeart)
