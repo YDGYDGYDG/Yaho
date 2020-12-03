@@ -150,9 +150,9 @@ end
 --무기 최초 대사 0 ~ 350
 function TalkDefaultWeapon()
     if HeartResult.width < HeartBad then
-        WeaponTalkText.text = "눈 깔아."
+        WeaponTalkText.text = "뭐죠?"
     elseif HeartResult.width >= HeartBad and HeartResult.width < HeartNormal then
-        WeaponTalkText.text = "뭘 봐. 말하는 무기 처음 봐?"
+        WeaponTalkText.text = "왜요?"
     elseif HeartResult.width >= HeartNormal and HeartResult.width < HeartGood then
         WeaponTalkText.text = "그래."
     elseif HeartResult.width >= HeartGood and HeartResult.width < HeartVeryGood then
