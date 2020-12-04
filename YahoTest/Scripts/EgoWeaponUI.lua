@@ -17,7 +17,6 @@ local StatsTexts = WeaponUI.GetChild("WeaponStats")
 local WeaponATKText = StatsTexts.GetChild("ATKResultText")
 local WeaponCriText = StatsTexts.GetChild("CriResultText")
 local WeaponCriPerText = StatsTexts.GetChild("CriPerResultText")
-local WeaponSPText = StatsTexts.GetChild("SPResultText")
 
 --무기 대사 텍스트
 local TalkTexts = WeaponUI.GetChild("WeaponTalk")
@@ -79,7 +78,7 @@ local RefreshWeaponHeart = function(WeaponHeart)
 end
 
 -- 서버 통신 함수
-local serverYas = function(WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponSP, WeaponHeart)
+local serverYas = function(WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponHeart)
     if WeaponType == nil then
         WeaponUIClose()
     end
@@ -98,7 +97,6 @@ local serverYas = function(WeaponType, WeaponLevel, WeaponATK, WeaponCri, Weapon
     WeaponATKText.text = WeaponATK
     WeaponCriText.text = WeaponCri
     WeaponCriPerText.text = WeaponCriPer
-    WeaponSPText.text = WeaponSP
     RefreshWeaponHeart(WeaponHeart)
     
     -- print("클라 정상 작동 완료")

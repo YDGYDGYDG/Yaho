@@ -51,17 +51,16 @@ local clientYas = function()
         -- 무기 정보 복사
         local WeaponType = EquipedWeapon.dataID
         local WeaponLevel = EquipedWeapon.level
-        -- 캐릭터 정보 복사 [장비중인 무기 프로퍼티, atk, cri, criPer, SP, heart]
+        -- 캐릭터 정보 복사 [장비중인 무기 프로퍼티, atk, cri, criPer, heart]
         local WeaponATK = unit.atk
         local WeaponCri = unit.GetStat(101)
         local WeaponCriPer = unit.GetStat(102)
-        local WeaponSP = unit.GetStat(103)
         local WeaponHeart = unit.GetStat(104)
         if WeaponHeart > HeartMax then
             unit.SetStat(104, HeartMax)
         end
         -- 클라에게 전달
-        unit.FireEvent("ReplyServerValue", WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponSP, WeaponHeart)
+        unit.FireEvent("ReplyServerValue", WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponHeart)
     end
     -- unit.SendSay("서버 정상 작동 완료")
 end
