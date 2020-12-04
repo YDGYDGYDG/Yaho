@@ -9,6 +9,10 @@ local ReinforceRandMin = 0
 
 local HeartMax = 300
 
+local WP_Atk_List = {100, 6, 9, 12,	16,	21,	27,	32,	39,	46,	53,	86,	98,	111,	124,	138,	153,	168,	184,	201,	219,	237,	256,	276,	297,	318,	340,	363,	386,	410,	435,	461,	487,	514,	542,	570,	599,	629,	660,	691,	723,	756,	789,	823,	858,	894,	930,	967,	1005,	1044,	1083,	1237,	1284,	1332,	1381,	1431,	1481,	1533,	1585,	1638,	1693,	1748,	1803,	1860,	1918,	1976,	2036,	2096,	2157,	2219,	2282,	2469,	2537,	2605,	2675,	2746,	2817,	2890,	2963,	3037,	3113,	3189,	3266,	3344,	3423,	3502,	3583,	3665,	3747,	3831,	3915,	4196,	4287,	4378,	4470,	4563,	4657,	4752,	4848,	4945
+}
+
+
 -- 무기 정보 버튼 활성 ==============================
 local ViewWeaponBt = function()
     local WEOnOff = false
@@ -31,9 +35,18 @@ local ViewWeaponBt = function()
     else
         -- unit.SendSay("당신의 무기 번호는"..EquipedWeapon.dataID)
         WEOnOff = true
+
+        -- 겸사겸사 무기 공격력에 호감도 반영하기
+        -- 무기 레벨에 맞는 공격력 추출 (루아 리스트는 index가 1부터임)
+        local WpAtk = WP_Atk_List[EquipedWeapon.level + 1]
+        -- 호감도 계산 : 30마다 공격력 3%가 오르는 계단식 그래프
+        local PowerOfLove = math.floor(unit.GetStat(104)/30) * 0.03
+        local LastAtk = WpAtk * (1 + PowerOfLove)
+        unit.SetStat(0, LastAtk)
     end
     -- unit.SendSay("test")
     unit.FireEvent("ReplyServerWeaponBt", WEOnOff)
+
 end
 Server.GetTopic("CallServerWeaponBt").Add(ViewWeaponBt)
 
@@ -131,17 +144,6 @@ end
 
 Server.GetTopic("GiftToWeapon").Add(GiftToWeapon)
 
---====================================================
--- 호감도에 의한 스탯 배율 변화
--- 0~300 으로 공격력/치명/치명배율에 추가분 지급
--- local PowerOfLove = function()
---     local WeaponHeart = unit.GetStat(104)
-    
--- end
--- -- 능력치가 변할 때마다 콜백되는 함수
--- Server.onRefreshStats.Add(PowerOfLove)
-
-
 
 --====================================================
 -- 강화 시스템
@@ -212,16 +214,5 @@ local StartReinforce = function()
     -- unit.SendSay("서버 강화 시퀀스 종료")
 end
 Server.GetTopic("StartReinforce").Add(StartReinforce)
-
-
-
-
-
-
-
-
-
-
-
 
 
