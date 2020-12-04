@@ -6,7 +6,6 @@ math.randomseed(os.time())
 -- 랜덤 변수
 local ReinforceRandMax = 100
 local ReinforceRandMin = 0
-local ReinforceSucRate = 0
 
 local HeartMax = 300
 
@@ -61,10 +60,8 @@ local clientYas = function()
         if WeaponHeart > HeartMax then
             unit.SetStat(104, HeartMax)
         end
-        local WeaponExp = unit.GetStat(105)
-
         -- 클라에게 전달
-        unit.FireEvent("ReplyServerValue", WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponSP, WeaponHeart, WeaponExp)
+        unit.FireEvent("ReplyServerValue", WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponSP, WeaponHeart)
     end
     -- unit.SendSay("서버 정상 작동 완료")
 end
@@ -155,7 +152,14 @@ local ReinforceUIOpen = function()
     local MStones = unit.CountItem(1)
     local EquipedWeapon = unit.GetEquipItem(2)
     local ReinLevel = EquipedWeapon.level
-    unit.FireEvent("ReplyServerReinforceUI", MStones, ReinLevel)
+    -- 확률 초기화
+    local ReinforceSucRate = 0
+    if EquipedWeapon.level < 10 then
+        ReinforceSucRate = (100-(EquipedWeapon.level*8))
+    else
+        ReinforceSucRate = 20
+    end
+    unit.FireEvent("ReplyServerReinforceUI", MStones, ReinLevel, ReinforceSucRate)
     -- unit.SendSay("강화 UI 오픈 결과 보냅니다")
 end
 Server.GetTopic("ReinforceUIOpen").Add(ReinforceUIOpen)
@@ -165,17 +169,16 @@ local StartReinforce = function()
     -- unit.SendSay("강화 실행 요청 받았습니다")
     local MStones = unit.CountItem(1)
     local EquipedWeapon = unit.GetEquipItem(2)
-
+    -- 확률 초기화
+    local ReinforceSucRate = 0
+    if EquipedWeapon.level < 10 then
+        ReinforceSucRate = (100-(EquipedWeapon.level*8))
+    else
+        ReinforceSucRate = 20
+    end
     if MStones >= 1 then
-        -- 확률 초기화
-        ReinforceSucRate = 0
-        if EquipedWeapon.level < 10 then
-            ReinforceSucRate = (100-(EquipedWeapon.level*8))
-        else
-            ReinforceSucRate = 20
-        end
         -- 무기 레벨 상승 요청
-        if EquipedWeapon.level < 100 then
+        if EquipedWeapon.level < 99 then
             local rand = math.random(ReinforceRandMin, ReinforceRandMax)
             if ReinforceSucRate >= rand then
                 unit.RemoveItem(1, 1, true, true, false)
@@ -184,6 +187,7 @@ local StartReinforce = function()
                 unit.StartGlobalEvent(2)
                 -- 강화된 무기 수치 반영 요청하기
                 unit.UnequipItem(2)
+                ViewWeaponBt()
                 clientYas()
             else
                 unit.RemoveItem(1, 1, true, true, false)
@@ -200,7 +204,12 @@ local StartReinforce = function()
     end
     MStones = unit.CountItem(1)
     local ReinLevel = EquipedWeapon.level
-    unit.FireEvent("ReplyServerReinforceUI", MStones, ReinLevel)
+    if EquipedWeapon.level < 10 then
+        ReinforceSucRate = (100-(EquipedWeapon.level*8))
+    else
+        ReinforceSucRate = 20
+    end
+    unit.FireEvent("ReplyServerReinforceUI", MStones, ReinLevel, ReinforceSucRate)
     -- unit.SendSay("서버 강화 시퀀스 종료")
 end
 Server.GetTopic("StartReinforce").Add(StartReinforce)
