@@ -2,6 +2,7 @@
 -- Server.SendCenterLabel('') : 서버 전체에 알림
 -- enemy.field.SpawnEnemy(mobID,enemy.x,enemy.y) : 몬스터ID를 통해 현재 보스 몬스터 위치에 몬스터 소환
 
+
 -- 성심 보스 : 번개왕 고블린
 function BlueGobline(enemy,ai,event,data)
 
@@ -20,10 +21,10 @@ function BlueGobline(enemy,ai,event,data)
         if AngryMode == 0 and enemy.hp <= enemy.maxHP * 0.30 then
             AngryMode = 1
             enemy.say('크아아악!')
-            enemy.SetStat(0, enemy.GetStat(0)*1.5) -- 공격력 1.5배 상승
+            enemy.SetStat(0, enemy.GetStat(0)*1.2) -- 공격력 1.2배 상승
 			enemy.SetStat(1, 0) -- 방어력 0으로 하락
-            enemy.moveSpeed = enemy.moveSpeed*1.5
-            enemy.monsterData.attackTime = 0.5
+            enemy.moveSpeed = enemy.moveSpeed*1.2
+            enemy.monsterData.attackTime = 1
             enemy.SendUpdated()
         end
 
@@ -130,7 +131,6 @@ function BlueGobline(enemy,ai,event,data)
 	end
 
 
-        
 end
 
 -- 논산 보스 : 골렘
@@ -146,15 +146,15 @@ function Golem(enemy,ai,event,data)
 
     if (event == 0) then -- 2초마다 실행되는 이벤트
 
-        enemy.AddHP(enemy.maxHP * 0.01) -- 매 2초마다 몬스터의 전체 HP의 1%씩 회복
+        enemy.AddHP(enemy.maxHP * 0.005) -- 매 2초마다 몬스터의 전체 HP의 0.5%씩 회복
 
         if AngryMode == 0 and enemy.hp <= enemy.maxHP * 0.30 then
             AngryMode = 1
             enemy.say('....!')
-            enemy.SetStat(0, enemy.GetStat(0)*1.5) -- 공격력 1.5배 상승
+            enemy.SetStat(0, enemy.GetStat(0)*1.2) -- 공격력 1.2배 상승
 			enemy.SetStat(1, 0) -- 방어력 0으로 하락
-            enemy.moveSpeed = enemy.moveSpeed*1.5
-            enemy.monsterData.attackTime = 0.5
+            enemy.moveSpeed = enemy.moveSpeed*1.2
+            enemy.monsterData.attackTime = 1
             enemy.SendUpdated()
         end
 
@@ -252,8 +252,10 @@ function Golem(enemy,ai,event,data)
 	end
 
 
-        
 end
+
+
+
 
 
 
