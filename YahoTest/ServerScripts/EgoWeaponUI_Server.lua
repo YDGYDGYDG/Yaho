@@ -66,8 +66,8 @@ local clientYas = function()
         local WeaponLevel = EquipedWeapon.level
         -- 캐릭터 정보 복사 [장비중인 무기 프로퍼티, atk, cri, criPer, heart]
         local WeaponATK = unit.atk
-        local WeaponCri = unit.GetStat(101)
-        local WeaponCriPer = unit.GetStat(102)
+        local WeaponCri = unit.luk
+        local WeaponCriPer = unit.agi
         local WeaponHeart = unit.GetStat(104)
         if WeaponHeart > HeartMax then
             unit.SetStat(104, HeartMax)
