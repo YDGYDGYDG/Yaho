@@ -160,7 +160,7 @@ function TalkWithWeapon()
         elseif rand == 5 then
             WeaponTalkText.text = "왜 자꾸 귀찮게 하는거야? 저리 좀 가라고!"
         elseif rand == 6 then
-            WeaponTalkText.text = "\N! 그렇게 비리비리해서 날 제대로 들 수나 있겠어?"
+            WeaponTalkText.text = unit.name.."! 그렇게 비리비리해서 날 제대로 들 수나 있겠어?"
         elseif rand == 7 then
             WeaponTalkText.text = "내 강함을 네가 잘 다룰 수 있을지 모르겠군."
         elseif rand == 8 then
@@ -176,13 +176,11 @@ function TalkWithWeapon()
         elseif rand == 2 then
             WeaponTalkText.text = "딱히 같이 있고 싶어서 있는 건 아니라니깐."
         elseif rand == 3 then
-            WeaponTalkText.text = "캠프장 인간들, 도무지 이해가 안가. 대체 왜 뭉쳐다니는거야?
-            혼자서 강해지면 되잖아."
+            WeaponTalkText.text = "캠프장 인간들, 도무지 이해가 안가. 대체 왜 뭉쳐다니는거야? 혼자서 강해지면 되잖아."
         elseif rand == 4 then
             WeaponTalkText.text = "…뭐, 위험해진다면 한 번쯤은 구해주지. 딱 한 번."
         elseif rand == 5 then
-            WeaponTalkText.text = "마신에 대해서 아냐고?
-            글쎄, 얼마나 강할 지는 모르겠지만 분명 나보다는 약한 놈이겠지 뭐."
+            WeaponTalkText.text = "마신에 대해서 아냐고? 글쎄, 얼마나 강할 지는 모르겠지만 분명 나보다는 약한 놈이겠지 뭐."
         elseif rand == 6 then
             WeaponTalkText.text = "..친구 같은 거 없어. 내가 자아를 가지게 된 이후 줄곧 난 혼자였으니까."
         elseif rand == 7 then
@@ -198,81 +196,63 @@ function TalkWithWeapon()
         elseif rand == 1 then
             WeaponTalkText.text = "햄스톤 말이야.. 조금 더 달라구. 그러면 널 더 좋게 봐주지."
         elseif rand == 2 then
-            WeaponTalkText.text = "가끔 말이야.. '맥주'라는 것을 마시면 평소 너 답지 않게 변하더군.
-            그거, 맛있는거냐?"
+            WeaponTalkText.text = "가끔 말이야.. '맥주'라는 것을 마시면 평소 너 답지 않게 변하더군. 그거, 맛있는거냐?"
         elseif rand == 3 then
             WeaponTalkText.text = "이제야 나를 다루는 방법을 터득한 것 같군."
         elseif rand == 4 then
-            WeaponTalkText.text = "이 곳의 날씨는 신기해……
-            물방울이 떨어지고, 하얗고 차가운 무언가가 내려온단 말이지."
+            WeaponTalkText.text = "이 곳의 날씨는 신기해... 물방울이 떨어지고, 하얗고 차가운 무언가가 내려온단 말이지."
         elseif rand == 5 then
             WeaponTalkText.text = "왜 그렇게 아둥바둥하는거냐? 무엇을 구하고 싶어하는거야?"
         elseif rand == 6 then
-            WeaponTalkText.text = "..평소에 다른 음식들은 잘만 먹으면서.
-            햄스톤의 맛은 궁금해하지 않다니 신기하군."
+            WeaponTalkText.text = "..평소에 다른 음식들은 잘만 먹으면서. 햄스톤의 맛은 궁금해하지 않다니 신기하군."
         elseif rand == 7 then
-            WeaponTalkText.text = "이름을 물어봐도, 딱히 이름 같은 거 없어.
-            네가 정해 준다면 한번쯤 생각해보지."
+            WeaponTalkText.text = "이름을 물어봐도, 딱히 이름 같은 거 없어. 네가 정해 준다면 한번쯤 생각해보지."
         elseif rand == 8 then
-            WeaponTalkText.text = "난 말이야, 세상에서 가장 강한 검이라고!
-            나랑 함께하는 것을 늘 영광으로 생각해라. 하하-!"
+            WeaponTalkText.text = "난 말이야, 세상에서 가장 강한 검이라고! 나랑 함께하는 것을 늘 영광으로 생각해라. 하하-!"
         elseif rand == 9 then
             WeaponTalkText.text = "인간들이 부르는 노래는 꽤나 즐거운 기분이 들게 하는군.."
         end
     elseif HeartResult.width >= HeartGood and HeartResult.width < HeartVeryGood then
         if rand == 0 then
-            WeaponTalkText.text = "..(기분 좋은 흥얼거림이 들려온다.)
-            응? 나 부른 거냐?"
+            WeaponTalkText.text = "..(기분 좋은 흥얼거림이 들려온다.) 응? 나 부른 거냐?"
         elseif rand == 1 then
-            WeaponTalkText.text = "\N! 햄스톤! 햄스톤이 필요해!
-            ..왜 그렇게 급박하게 부르냐고?
-            햄스톤이 필요하다니까!"
+            WeaponTalkText.text = unit.name.."! 햄스톤! 햄스톤이 필요해! ..왜 그렇게 급박하게 부르냐고? 햄스톤이 필요하다니까!"
         elseif rand == 2 then
-            WeaponTalkText.text = "\N! 나도 이제 노래를 부를 줄 안다고. 들어볼테냐?
-            (불협화음의 노랫소리가 들려온다.)"
+            WeaponTalkText.text = unit.name.."! 나도 이제 노래를 부를 줄 안다고. 들어볼테냐? (불협화음의 노랫소리가 들려온다.)"
         elseif rand == 3 then
-            WeaponTalkText.text = "..내 목소리는 너한테만 들린다고.
-            허공에 중얼중얼 거려봤자, 너만 미친 놈 취급 받는다?"
+            WeaponTalkText.text = "..내 목소리는 너한테만 들린다고. 허공에 중얼중얼 거려봤자, 너만 미친 놈 취급 받는다?"
         elseif rand == 4 then
             WeaponTalkText.text = "가끔은 네가 내 주인이라는 사실이 마음에 들어."
         elseif rand == 5 then
-            WeaponTalkText.text = "슈퍼 햄스톤.. 정말 짜릿한 환상의 맛이었지.
-            더 준다면 마다하지 않겠어."
+            WeaponTalkText.text = "슈퍼 햄스톤.. 정말 짜릿한 환상의 맛이었지. 더 준다면 마다하지 않겠어."
         elseif rand == 6 then
             WeaponTalkText.text = "이제야 너와 제대로 공명하는 기분이야."
         elseif rand == 7 then
-            WeaponTalkText.text = "내게 얼굴이 있다면.. 꽤나 미남이었을 것 같은데.
-            도대체가 난 모자란 부분이 없군."
+            WeaponTalkText.text = "내게 얼굴이 있다면.. 꽤나 미남이었을 것 같은데. 도대체가 난 모자란 부분이 없군."
         elseif rand == 8 then
-            WeaponTalkText.text = "마음에 안 들면, 베어 버리면 돼.
-            내가 같이 있으니 아무런 걱정 없어."
+            WeaponTalkText.text = "마음에 안 들면, 베어 버리면 돼. 내가 같이 있으니 아무런 걱정 없어."
         elseif rand == 9 then
             WeaponTalkText.text = "누군가와 함께 있을 때도 즐겁다는 기분이 들다니.."
         end
     elseif HeartResult.width >= HeartVeryGood then
         if rand == 0 then
-            WeaponTalkText.text = "만일 나에게도 친구라는 게 있다면..
-            그건 아마 네가 아닐까 생각이 드는군."
+            WeaponTalkText.text = "만일 나에게도 친구라는 게 있다면.. 그건 아마 네가 아닐까 생각이 드는군."
         elseif rand == 1 then
-            WeaponTalkText.text = "가끔 내게도 실체가 있었다면..
-            너와 좀 더 즐거운 경험을 쌓았을지도 모르겠어.
-            ..웃고, 떠들고, 마시고, 취하고 하는 것들 말이야."
+            WeaponTalkText.text = "가끔 내게도 실체가 있었다면.. 너와 좀 더 즐거운 경험을 쌓았을지도 모르겠어. ..웃고, 떠들고, 마시고, 취하고 하는 것들 말이야."
         elseif rand == 2 then
             WeaponTalkText.text = "내가 강하기 때문에 너를 지킬 수 있다는 사실이 만족스러워."
         elseif rand == 3 then
-            WeaponTalkText.text = "\N, 최선을 다해서 너를 돕겠다."
+            WeaponTalkText.text = unit.name..", 최선을 다해서 너를 돕겠다."
         elseif rand == 4 then
-            WeaponTalkText.text = "..다 좋은데 말이지. 햄스톤만 있으면 딱일 텐데 말이야.
-            뭐, 안 준다고 해서 도망가지는 않을 테니 걱정 말라구."
+            WeaponTalkText.text = "..다 좋은데 말이지. 햄스톤만 있으면 딱일 텐데 말이야. 뭐, 안 준다고 해서 도망가지는 않을 테니 걱정 말라구."
         elseif rand == 5 then
-            WeaponTalkText.text = "\N! 오늘은 어디로 떠나는 거냐? 이 몸이 함께 해주지."
+            WeaponTalkText.text = unit.name.."! 오늘은 어디로 떠나는 거냐? 이 몸이 함께 해주지."
         elseif rand == 6 then
             WeaponTalkText.text = "..나보다 저 희승이란 놈을 더 따르는건 아니지?"
         elseif rand == 7 then
             WeaponTalkText.text = "너, 보면 볼수록 괜찮은 놈 같단 말이지."
         elseif rand == 8 then
-            WeaponTalkText.text = "'나'라는 자아를 만든 게 누구냐고? 대장장이 신, 그리고 DK.. 이렇게 알고 있어.
-            자세한 건 나도 몰라. 뭐, 고마워 해야 하겠지."
+            WeaponTalkText.text = "'나'라는 자아를 만든 게 누구냐고? 대장장이 신, 그리고 DK.. 이렇게 알고 있어. 자세한 건 나도 몰라. 뭐, 고마워 해야 하겠지."
         elseif rand == 9 then
             WeaponTalkText.text = "지금까지도, 앞으로도 내 주인은 너 하나 뿐이야."
         end
