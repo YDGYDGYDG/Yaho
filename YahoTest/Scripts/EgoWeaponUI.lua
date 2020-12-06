@@ -66,7 +66,7 @@ ReinforceUI.visible = false
 -- 랜덤 사용
 math.randomseed(os.time())
 -- 랜덤 변수
-local FeedbackRandMax = 4
+local FeedbackRandMax = 9
 local AdviceRandMax = 4
 local TalkRandMax = 9
 local TalkRandMin = 0
