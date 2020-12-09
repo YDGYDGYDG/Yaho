@@ -548,7 +548,95 @@ function Named_NS2(enemy,ai,event,data)
         
 end
 
+function Named_Ab1(enemy,ai,event,data)
 
+    if (event == -1) then
+    --커스텀 딜레이랑 스킬 초기화
+    ai.customData.delay = 0
+    ai.customData.skill = 0
+    end
+
+    if (event == 0) then -- 2초마다 실행되는 이벤트
+
+        --맵에 플레이어가 하나도 없으면 null 세팅
+        if enemy.field.playerCount <=0 then
+            ai.SetTargetUnit(nil)
+
+        -- 타겟이 없거나, 기존 타겟이던 unit이 맵을 나갔거나, x또는y값 차이의 절댓값이 300을 넘어서면
+        -- 타겟을 nil로 초기화하고 200 범위 내에서 타겟을 설정
+        elseif (ai.GetTargetUnit()==nil)
+               or (enemy.field.GetUnit(ai.GetTargetUnitID())==nil)
+               or (math.abs(enemy.x-enemy.field.GetUnit(ai.GetTargetUnitID()).x) >= 300) 
+               or (math.abs(enemy.y-enemy.field.GetUnit(ai.GetTargetUnitID()).y) >= 300) then
+            
+            if ai.GetTargetUnit() ~= nil then
+                enemy.say('....')
+            end
+            
+            ai.SetFollowTarget(false) --타겟이 사라졌으면 추적을 비활성화 
+            ai.SetTargetUnit(nil)
+            ai.SetNearTarget(0,200)
+
+            -- 주변을 탐색 후 타겟을 찾았으면(nil이 아니면), 추적을 활성화(true), 메세지출력
+            if ai.GetTargetUnit() ~= nil then 
+                ai.SetFollowTarget(true)
+                enemy.say('..!!')
+            end
+        end
+        
+        --타겟이 있으면 타겟을 향해 스킬사용
+        if ai.GetTargetUnit() ~= nil then
+            if ai.customData.delay > 0 then
+                ai.customData.delay = ai.customData.delay - 1
+            end
+            
+            if ai.customData.skill > 0 and ai.customData.delay <= 0 then
+                ai.UseSkill(ai.customData.skill)
+                ai.customData.skill = 0
+            end
+            
+            if ai.customData.delay <= 0 then
+                local ran = rand(1,101) -- 1부터 100까지 아무 숫자
+                if ran <= 30 then -- 30 이하 일 경우
+                    ai.customData.skill = 216 -- 스킬 1
+                    ai.customData.delay = 4 -- 딜레이 6초 (ai함수 반복이 2초마다 이루어짐 따라서 2*2(4초))
+                end
+            end
+        end
+        
+        --타겟이 없을경우 예외처리
+        if ai.GetTargetUnit() == nil then
+            return
+        end
+        
+    end
+    
+    if (event == 1) then -- 몬스터가 공격을 받을때마다 실행되는 이벤트
+        --공격한 유닛이 없을경우 예외처리
+        if ai.GetAttackedUnit() == nil then
+            return
+        else
+            --기존타겟유닛과 공격유닛이 같지 않을때, 공격을 한 유닛을 타겟으로 지정 또는 변경하고 추격
+            if ai.GetTargetUnit() ~= ai.GetAttackedUnit() then 
+                ai.SetTargetUnit(ai.GetAttackedUnit())
+                ai.SetFollowTarget(true)
+                enemy.say('..!')
+            end
+            
+        end
+    end
+
+	if (event == 2) then -- 사망 시
+		-- 사망 시, 리스폰 시간을 적용해둔 개발자들을 위해 몬스터의 ai 데이터 및 스텟 초기화
+		ai.customData.skill = 0
+		ai.customData.delay = 0
+		enemy.moveSpeed = Server.GetMonster(108).moveSpeed
+		enemy.SetStat(0, Server.GetMonster(108).attack)
+		enemy.SetStat(1, Server.GetMonster(108).defense)
+		enemy.SendUpdated()
+	end
+        
+end
 
 -- Server.SetMonsterAI(n, Named_) -- n : name
 
@@ -559,5 +647,5 @@ Server.SetMonsterAI(75, Named_HB2) -- 75 : 들개
 Server.SetMonsterAI(77, Named_NS1) -- 77 : 돌뿔소
 Server.SetMonsterAI(78, Named_NS2) -- 78 : 돌리앗
 
-
+Server.SetMonsterAI(108, Named_Ab1) -- 78 : 심연의 악몽
 
