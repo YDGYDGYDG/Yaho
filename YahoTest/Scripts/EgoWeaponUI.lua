@@ -75,7 +75,16 @@ local TalkRandMin = 0
 local RefreshWeaponHeart = function(WeaponHeart)
     HeartResultText.text = math.floor(WeaponHeart / HeartMAX * 100).." %"
     HeartResult.width = WeaponHeart
+    Client.GetTopic("GiveYourHeart").Remove(RefreshWeaponHeart)
 end
+
+
+-- 호감도 계속 요청하기
+local GiveMeHeart = function()
+    Client.FireEvent("GiveMeHeart")
+end
+Client.onTick.Add(GiveMeHeart, 1)
+Client.GetTopic("GiveYourHeart").Add(RefreshWeaponHeart)
 
 -- 서버 통신 함수
 local serverYas = function(WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponHeart)

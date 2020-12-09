@@ -47,8 +47,17 @@ local ViewWeaponBt = function()
     -- unit.SendSay("test")
     unit.FireEvent("ReplyServerWeaponBt", WEOnOff)
 
+    -- 겸사겸사 호감도 읽어오기
+    unit.SetStat(104, unit.GetVar(40))
 end
 Server.GetTopic("CallServerWeaponBt").Add(ViewWeaponBt)
+
+-- 호감도만 전달하기
+local GiveYourHeart = function()
+    local WeaponHeart = unit.GetStat(104)
+    unit.FireEvent("GiveYourHeart", WeaponHeart)
+end
+Server.GetTopic("GiveMeHeart").Add(GiveYourHeart)
 
 --======================================================================
 -- 무기 장착
@@ -85,7 +94,7 @@ Server.GetTopic("CallServerValue").Add(clientYas)
 --=========================================================================
 --호감도
 
-local GiftUIOpen = function()
+local GiftUIRefresh = function()
     local hams = unit.CountItem(8)
     local shams = unit.CountItem(9)
     local WeaponHeart = unit.GetStat(104)
@@ -93,7 +102,7 @@ local GiftUIOpen = function()
     -- unit.SendSay("햄스톤 개수 정보 전달 완료.")
 end
 
-Server.GetTopic("CallServerHamstones").Add(GiftUIOpen)
+Server.GetTopic("CallServerHamstones").Add(GiftUIRefresh)
 
 --햄스톤 먹였다고 신호 받으면 호감도 스탯 상승시키기
 local GiftToWeapon = function(n)
@@ -108,37 +117,40 @@ local GiftToWeapon = function(n)
             -- 무기 호감도 상승 요청
             if unit.GetStat(104) < HeartMax then
                 unit.RemoveItem(8, 1, true, true, false)
-                unit.SetStat(104, unit.GetStat(104) + n)
+                -- unit.SetStat(104, unit.GetStat(104) + n)
+                unit.StartGlobalEvent(42)
                 -- unit.SendSay("햄스톤 시퀀스 성공 종료")
                 -- 호감도 변경 대사 출력 요청
                 unit.FireEvent("GiftWeaponFeedback")
             else
                 unit.SetStat(104, HeartMax)
-                unit.SendSay("이미 호감도가 최대입니다.")
+                unit.StartGlobalEvent(44)
             end
         else
-            unit.SendSay("햄스톤이 부족합니다.")
+            unit.StartGlobalEvent(45)
         end
     elseif n == 20 then
         if shams >= 1 then
                 -- 무기 호감도 상승 요청
             if unit.GetStat(104) < HeartMax then
                 unit.RemoveItem(9, 1, true, true, false)
-                unit.SetStat(104, unit.GetStat(104) + n)
+                -- unit.SetStat(104, unit.GetStat(104) + n)
                 -- unit.SendSay("햄스톤 시퀀스 성공 종료"")
                 unit.FireEvent("GiftWeaponFeedback")
             else
                 unit.SetStat(104, HeartMax)
-                unit.SendSay("이미 호감도가 최대입니다.")
+                unit.StartGlobalEvent(44)
             end
         else
-            unit.SendSay("슈퍼햄스톤이 부족합니다.")
+            unit.StartGlobalEvent(46)
         end
     end
-    hams = unit.CountItem(8)
-    shams = unit.CountItem(9)
-    local WeaponHeart = unit.GetStat(104)
-    unit.FireEvent("ReplyServerHamstones", hams, shams, WeaponHeart)
+
+    -- unit.SetStat(104, unit.GetVar(40))
+    -- unit.SendSay("변수: "..unit.GetVar(40)) -- 오른 값이 출력되어야 한다
+    -- unit.SendSay("능력치: "..unit.GetStat(104)) -- 오른 값이 출력되어야 한다
+    -- GiftUIRefresh()
+    
     -- unit.SendSay("햄스톤 시퀀스 종료")
 end
 
