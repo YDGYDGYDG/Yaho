@@ -75,7 +75,16 @@ local TalkRandMin = 0
 local RefreshWeaponHeart = function(WeaponHeart)
     HeartResultText.text = math.floor(WeaponHeart / HeartMAX * 100).." %"
     HeartResult.width = WeaponHeart
+    Client.GetTopic("GiveYourHeart").Remove(RefreshWeaponHeart)
 end
+
+
+-- 호감도 계속 요청하기
+local GiveMeHeart = function()
+    Client.FireEvent("GiveMeHeart")
+end
+Client.onTick.Add(GiveMeHeart, 1)
+Client.GetTopic("GiveYourHeart").Add(RefreshWeaponHeart)
 
 -- 서버 통신 함수
 local serverYas = function(WeaponType, WeaponLevel, WeaponATK, WeaponCri, WeaponCriPer, WeaponHeart)
@@ -262,69 +271,69 @@ end
 
 -- 무기의 조언 얻기
 function AdviceByWeapon()
-    local rand = math.random(TalkRandMin, AdviceRandMax)
+    -- local rand = math.random(TalkRandMin, AdviceRandMax)
 
-    if HeartResult.width < HeartBad then
-        if rand == 0 then
-            WeaponTalkText.text = "좀 더 갈고 닦으세요."
-        elseif rand == 1 then
-            WeaponTalkText.text = "나를 원한다면 좀 더 성의를 보이세요."
-        elseif rand == 2 then
-            WeaponTalkText.text = ""
-        elseif rand == 3 then
-            WeaponTalkText.text = ""
-        elseif rand == 4 then
-            WeaponTalkText.text = ""
-        end
-    elseif HeartResult.width >= HeartBad and HeartResult.width < HeartNormal then
-        if rand == 0 then
-            WeaponTalkText.text = ""
-        elseif rand == 1 then
-            WeaponTalkText.text = ""
-        elseif rand == 2 then
-            WeaponTalkText.text = ""
-        elseif rand == 3 then
-            WeaponTalkText.text = ""
-        elseif rand == 4 then
-            WeaponTalkText.text = ""
-        end
-    elseif HeartResult.width >= HeartNormal and HeartResult.width < HeartGood then
-        if rand == 0 then
-            WeaponTalkText.text = ""
-        elseif rand == 1 then
-            WeaponTalkText.text = ""
-        elseif rand == 2 then
-            WeaponTalkText.text = ""
-        elseif rand == 3 then
-            WeaponTalkText.text = ""
-        elseif rand == 4 then
-            WeaponTalkText.text = ""
-        end
-    elseif HeartResult.width >= HeartGood and HeartResult.width < HeartVeryGood then
-        if rand == 0 then
-            WeaponTalkText.text = ""
-        elseif rand == 1 then
-            WeaponTalkText.text = ""
-        elseif rand == 2 then
-            WeaponTalkText.text = ""
-        elseif rand == 3 then
-            WeaponTalkText.text = ""
-        elseif rand == 4 then
-            WeaponTalkText.text = ""
-        end
-    elseif HeartResult.width >= HeartVeryGood then
-        if rand == 0 then
-            WeaponTalkText.text = ""
-        elseif rand == 1 then
-            WeaponTalkText.text = ""
-        elseif rand == 2 then
-            WeaponTalkText.text = ""
-        elseif rand == 3 then
-            WeaponTalkText.text = ""
-        elseif rand == 4 then
-            WeaponTalkText.text = ""
-        end
-    end
+    -- if HeartResult.width < HeartBad then
+    --     if rand == 0 then
+    --         WeaponTalkText.text = "좀 더 갈고 닦으세요."
+    --     elseif rand == 1 then
+    --         WeaponTalkText.text = "나를 원한다면 좀 더 성의를 보이세요."
+    --     elseif rand == 2 then
+    --         WeaponTalkText.text = ""
+    --     elseif rand == 3 then
+    --         WeaponTalkText.text = ""
+    --     elseif rand == 4 then
+    --         WeaponTalkText.text = ""
+    --     end
+    -- elseif HeartResult.width >= HeartBad and HeartResult.width < HeartNormal then
+    --     if rand == 0 then
+    --         WeaponTalkText.text = ""
+    --     elseif rand == 1 then
+    --         WeaponTalkText.text = ""
+    --     elseif rand == 2 then
+    --         WeaponTalkText.text = ""
+    --     elseif rand == 3 then
+    --         WeaponTalkText.text = ""
+    --     elseif rand == 4 then
+    --         WeaponTalkText.text = ""
+    --     end
+    -- elseif HeartResult.width >= HeartNormal and HeartResult.width < HeartGood then
+    --     if rand == 0 then
+    --         WeaponTalkText.text = ""
+    --     elseif rand == 1 then
+    --         WeaponTalkText.text = ""
+    --     elseif rand == 2 then
+    --         WeaponTalkText.text = ""
+    --     elseif rand == 3 then
+    --         WeaponTalkText.text = ""
+    --     elseif rand == 4 then
+    --         WeaponTalkText.text = ""
+    --     end
+    -- elseif HeartResult.width >= HeartGood and HeartResult.width < HeartVeryGood then
+    --     if rand == 0 then
+    --         WeaponTalkText.text = ""
+    --     elseif rand == 1 then
+    --         WeaponTalkText.text = ""
+    --     elseif rand == 2 then
+    --         WeaponTalkText.text = ""
+    --     elseif rand == 3 then
+    --         WeaponTalkText.text = ""
+    --     elseif rand == 4 then
+    --         WeaponTalkText.text = ""
+    --     end
+    -- elseif HeartResult.width >= HeartVeryGood then
+    --     if rand == 0 then
+    --         WeaponTalkText.text = ""
+    --     elseif rand == 1 then
+    --         WeaponTalkText.text = ""
+    --     elseif rand == 2 then
+    --         WeaponTalkText.text = ""
+    --     elseif rand == 3 then
+    --         WeaponTalkText.text = ""
+    --     elseif rand == 4 then
+    --         WeaponTalkText.text = ""
+    --     end
+    -- end
 
 end
 
